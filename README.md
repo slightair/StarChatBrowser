@@ -19,7 +19,7 @@ StarChatBrowser とは StarChat (https://github.com/hajimehoshi/star-chat) を�
 ----
 CocoaPods を使っているのでビルドする前に以下のコマンドを叩きましょう。CocoaPods が入っていなかったらまずはそのインストールからはじめましょう。
 
-    > pod install
+    > pod install StarChatBrowser.xcodeproj
     > open StarChatBrowser.xcworkspace 
 
 プロジェクトを開くのは xcworkspace の方です。
