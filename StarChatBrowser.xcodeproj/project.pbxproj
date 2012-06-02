@@ -1,0 +1,387 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		13AA376715014B4694A5322F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 833ECF72A3844DFC97509A3C /* libPods.a */; };
+		5700019E1579278E008429C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5700019D1579278E008429C9 /* Cocoa.framework */; };
+		570001A81579278E008429C9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 570001A61579278E008429C9 /* InfoPlist.strings */; };
+		570001AA1579278E008429C9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 570001A91579278E008429C9 /* main.m */; };
+		570001AE1579278E008429C9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 570001AC1579278E008429C9 /* Credits.rtf */; };
+		570001B11579278E008429C9 /* SCBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 570001B01579278E008429C9 /* SCBAppDelegate.m */; };
+		570001B41579278E008429C9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 570001B21579278E008429C9 /* MainMenu.xib */; };
+		570001BC15792810008429C9 /* SCBMainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 570001BB15792810008429C9 /* SCBMainWindowController.m */; };
+		570001BE15792C9A008429C9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 570001BD15792C9A008429C9 /* WebKit.framework */; };
+		570001C11579D48F008429C9 /* SCBMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 570001C01579D48F008429C9 /* SCBMainWindow.m */; };
+		57015BFA1579EAC90033E4C1 /* SCBUserStreamClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57015BF91579EAC90033E4C1 /* SCBUserStreamClient.m */; };
+		571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 571E199B157A12DB005C59CC /* SCBGrowlClient.m */; };
+		57C43BDF157A428400518358 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
+		57C43BE2157A433200518358 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		57C43BE1157A431D00518358 /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				57C43BE2157A433200518358 /* Growl.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		4441BC95458A460587B5C41C /* Pods.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		570001991579278E008429C9 /* StarChatBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarChatBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5700019D1579278E008429C9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		570001A01579278E008429C9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		570001A11579278E008429C9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		570001A21579278E008429C9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		570001A51579278E008429C9 /* StarChatBrowser-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StarChatBrowser-Info.plist"; sourceTree = "<group>"; };
+		570001A71579278E008429C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		570001A91579278E008429C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		570001AB1579278E008429C9 /* StarChatBrowser-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StarChatBrowser-Prefix.pch"; sourceTree = "<group>"; };
+		570001AD1579278E008429C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		570001AF1579278E008429C9 /* SCBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SCBAppDelegate.h; sourceTree = "<group>"; };
+		570001B01579278E008429C9 /* SCBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SCBAppDelegate.m; sourceTree = "<group>"; };
+		570001B31579278E008429C9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		570001BA15792810008429C9 /* SCBMainWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBMainWindowController.h; sourceTree = "<group>"; };
+		570001BB15792810008429C9 /* SCBMainWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBMainWindowController.m; sourceTree = "<group>"; };
+		570001BD15792C9A008429C9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		570001BF1579D48F008429C9 /* SCBMainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBMainWindow.h; sourceTree = "<group>"; };
+		570001C01579D48F008429C9 /* SCBMainWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBMainWindow.m; sourceTree = "<group>"; };
+		57015BF81579EAC90033E4C1 /* SCBUserStreamClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBUserStreamClient.h; sourceTree = "<group>"; };
+		57015BF91579EAC90033E4C1 /* SCBUserStreamClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBUserStreamClient.m; sourceTree = "<group>"; };
+		571E199A157A12DB005C59CC /* SCBGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBGrowlClient.h; sourceTree = "<group>"; };
+		571E199B157A12DB005C59CC /* SCBGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBGrowlClient.m; sourceTree = "<group>"; };
+		571E199D157A1585005C59CC /* GCDSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDSingleton.h; path = Frameworks/GCDSingleton.h; sourceTree = "<group>"; };
+		57C43BDE157A428400518358 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+		833ECF72A3844DFC97509A3C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		570001961579278E008429C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				570001BE15792C9A008429C9 /* WebKit.framework in Frameworks */,
+				5700019E1579278E008429C9 /* Cocoa.framework in Frameworks */,
+				13AA376715014B4694A5322F /* libPods.a in Frameworks */,
+				57C43BDF157A428400518358 /* Growl.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5700018E1579278E008429C9 = {
+			isa = PBXGroup;
+			children = (
+				570001A31579278E008429C9 /* StarChatBrowser */,
+				5700019C1579278E008429C9 /* Frameworks */,
+				5700019A1579278E008429C9 /* Products */,
+				4441BC95458A460587B5C41C /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		5700019A1579278E008429C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				570001991579278E008429C9 /* StarChatBrowser.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5700019C1579278E008429C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				571E199D157A1585005C59CC /* GCDSingleton.h */,
+				57C43BDE157A428400518358 /* Growl.framework */,
+				570001BD15792C9A008429C9 /* WebKit.framework */,
+				5700019D1579278E008429C9 /* Cocoa.framework */,
+				5700019F1579278E008429C9 /* Other Frameworks */,
+				833ECF72A3844DFC97509A3C /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5700019F1579278E008429C9 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				570001A01579278E008429C9 /* AppKit.framework */,
+				570001A11579278E008429C9 /* CoreData.framework */,
+				570001A21579278E008429C9 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		570001A31579278E008429C9 /* StarChatBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				570001AF1579278E008429C9 /* SCBAppDelegate.h */,
+				570001B01579278E008429C9 /* SCBAppDelegate.m */,
+				570001B21579278E008429C9 /* MainMenu.xib */,
+				570001BA15792810008429C9 /* SCBMainWindowController.h */,
+				570001BB15792810008429C9 /* SCBMainWindowController.m */,
+				570001BF1579D48F008429C9 /* SCBMainWindow.h */,
+				570001C01579D48F008429C9 /* SCBMainWindow.m */,
+				57015BF81579EAC90033E4C1 /* SCBUserStreamClient.h */,
+				57015BF91579EAC90033E4C1 /* SCBUserStreamClient.m */,
+				571E199A157A12DB005C59CC /* SCBGrowlClient.h */,
+				571E199B157A12DB005C59CC /* SCBGrowlClient.m */,
+				570001A41579278E008429C9 /* Supporting Files */,
+			);
+			path = StarChatBrowser;
+			sourceTree = "<group>";
+		};
+		570001A41579278E008429C9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				570001A51579278E008429C9 /* StarChatBrowser-Info.plist */,
+				570001A61579278E008429C9 /* InfoPlist.strings */,
+				570001A91579278E008429C9 /* main.m */,
+				570001AB1579278E008429C9 /* StarChatBrowser-Prefix.pch */,
+				570001AC1579278E008429C9 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		570001981579278E008429C9 /* StarChatBrowser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 570001B71579278E008429C9 /* Build configuration list for PBXNativeTarget "StarChatBrowser" */;
+			buildPhases = (
+				570001951579278E008429C9 /* Sources */,
+				570001961579278E008429C9 /* Frameworks */,
+				570001971579278E008429C9 /* Resources */,
+				439A35D0A5234E2093337670 /* Copy Pods Resources */,
+				57C43BE1157A431D00518358 /* Copy Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StarChatBrowser;
+			productName = StarChatBrowser;
+			productReference = 570001991579278E008429C9 /* StarChatBrowser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		570001901579278E008429C9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = SCB;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 570001931579278E008429C9 /* Build configuration list for PBXProject "StarChatBrowser" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5700018E1579278E008429C9;
+			productRefGroup = 5700019A1579278E008429C9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				570001981579278E008429C9 /* StarChatBrowser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		570001971579278E008429C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				570001A81579278E008429C9 /* InfoPlist.strings in Resources */,
+				570001AE1579278E008429C9 /* Credits.rtf in Resources */,
+				570001B41579278E008429C9 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		439A35D0A5234E2093337670 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		570001951579278E008429C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				570001AA1579278E008429C9 /* main.m in Sources */,
+				570001B11579278E008429C9 /* SCBAppDelegate.m in Sources */,
+				570001BC15792810008429C9 /* SCBMainWindowController.m in Sources */,
+				570001C11579D48F008429C9 /* SCBMainWindow.m in Sources */,
+				57015BFA1579EAC90033E4C1 /* SCBUserStreamClient.m in Sources */,
+				571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		570001A61579278E008429C9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				570001A71579278E008429C9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		570001AC1579278E008429C9 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				570001AD1579278E008429C9 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		570001B21579278E008429C9 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				570001B31579278E008429C9 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		570001B51579278E008429C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		570001B61579278E008429C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		570001B81579278E008429C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4441BC95458A460587B5C41C /* Pods.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/xcodeproj.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StarChatBrowser/StarChatBrowser-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "StarChatBrowser/StarChatBrowser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		570001B91579278E008429C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4441BC95458A460587B5C41C /* Pods.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/xcodeproj.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StarChatBrowser/StarChatBrowser-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "StarChatBrowser/StarChatBrowser-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		570001931579278E008429C9 /* Build configuration list for PBXProject "StarChatBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				570001B51579278E008429C9 /* Debug */,
+				570001B61579278E008429C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		570001B71579278E008429C9 /* Build configuration list for PBXNativeTarget "StarChatBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				570001B81579278E008429C9 /* Debug */,
+				570001B91579278E008429C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 570001901579278E008429C9 /* Project object */;
+}
