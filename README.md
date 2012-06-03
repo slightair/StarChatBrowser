@@ -13,7 +13,6 @@ StarChatBrowser とは StarChat (https://github.com/hajimehoshi/star-chat) を�
 未実装
 ----
 * サーバが指定できない （そのうちちゃんとやる）
-* ユーザ、パスワードが指定できない （そのうちちゃんとやる）
 
 開発者向け
 ----
