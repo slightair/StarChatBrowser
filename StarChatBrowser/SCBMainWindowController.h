@@ -12,8 +12,9 @@
 
 @interface SCBMainWindowController : NSWindowController <SCBUserStreamClientDelegate>
 
+- (void)prepare;
 - (void)display;
-- (void)loadMainPage;
+- (void)loadMainPage:(NSString *)URLString;
 - (IBAction)didPressedQuitButton:(id)sender;
 
 @property (assign) IBOutlet WebView *mainWebView;

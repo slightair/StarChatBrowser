@@ -34,7 +34,8 @@
     
     self.statusItem = statusItem;
     
-    [self.windowController loadMainPage];
+    [self.windowController prepare];
+    [self.windowController loadMainPage:@"http://localhost:4567"];
 }
 
 - (void)didClickedStatusItem:(id)sender

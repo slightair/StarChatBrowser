@@ -21,6 +21,7 @@
 		571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 571E199B157A12DB005C59CC /* SCBGrowlClient.m */; };
 		57C43BDF157A428400518358 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
 		57C43BE2157A433200518358 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
+		57C43BFE157BC4E300518358 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C43BFD157BC4E300518358 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -63,6 +64,8 @@
 		571E199B157A12DB005C59CC /* SCBGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBGrowlClient.m; sourceTree = "<group>"; };
 		571E199D157A1585005C59CC /* GCDSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDSingleton.h; path = Frameworks/GCDSingleton.h; sourceTree = "<group>"; };
 		57C43BDE157A428400518358 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+		57C43BFC157BC4E300518358 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Frameworks/NSData+Base64.h"; sourceTree = "<group>"; };
+		57C43BFD157BC4E300518358 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Frameworks/NSData+Base64.m"; sourceTree = "<group>"; };
 		833ECF72A3844DFC97509A3C /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -103,6 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				571E199D157A1585005C59CC /* GCDSingleton.h */,
+				57C43BFC157BC4E300518358 /* NSData+Base64.h */,
+				57C43BFD157BC4E300518358 /* NSData+Base64.m */,
 				57C43BDE157A428400518358 /* Growl.framework */,
 				570001BD15792C9A008429C9 /* WebKit.framework */,
 				5700019D1579278E008429C9 /* Cocoa.framework */,
@@ -242,6 +247,7 @@
 				570001C11579D48F008429C9 /* SCBMainWindow.m in Sources */,
 				57015BFA1579EAC90033E4C1 /* SCBUserStreamClient.m in Sources */,
 				571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */,
+				57C43BFE157BC4E300518358 /* NSData+Base64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
