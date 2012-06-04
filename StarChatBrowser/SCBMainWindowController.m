@@ -29,9 +29,6 @@
 
 - (void)prepare
 {
-    self.window.backgroundColor = [NSColor clearColor];
-    [self.window setOpaque:NO];
-    
     self.mainWebView.resourceLoadDelegate = self;
 }
 
