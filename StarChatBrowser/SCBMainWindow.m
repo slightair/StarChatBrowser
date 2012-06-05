@@ -15,18 +15,5 @@
     return YES;
 }
 
-- (void)mouseDown:(NSEvent *)theEvent
-{
-    NSPoint origin = [self frame].origin;
-    NSPoint oldPosition = [self convertBaseToScreen:[theEvent locationInWindow]];
-    while ((theEvent = [self nextEventMatchingMask:NSLeftMouseDraggedMask|NSLeftMouseUpMask]) && ([theEvent type] != NSLeftMouseUp)) {
-        NSPoint newPosition = [self convertBaseToScreen:[theEvent locationInWindow]];
-        origin.x += newPosition.x - oldPosition.x;
-        origin.y += newPosition.y - oldPosition.y;
-        [self setFrameOrigin:origin];
-        oldPosition = newPosition;
-    }
-}
-
 @end
 

@@ -15,8 +15,10 @@
 - (void)prepare;
 - (void)display;
 - (void)loadMainPage:(NSString *)URLString;
-- (IBAction)didPressedQuitButton:(id)sender;
+- (IBAction)didPushedDisclosureButton:(id)sender;
+- (IBAction)didSelectQuitItem:(id)sender;
 
 @property (assign) IBOutlet WebView *mainWebView;
+@property (assign) IBOutlet NSMenu *toolButtonActionMenu;
 
 @end

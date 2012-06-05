@@ -23,6 +23,7 @@
 @implementation SCBMainWindowController
 
 @synthesize mainWebView = _mainWebView;
+@synthesize toolButtonActionMenu = _toolButtonActionMenu;
 @synthesize mainPageURLString = _mainPageURLString;
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
@@ -53,7 +54,12 @@
     [client start];
 }
 
-- (IBAction)didPressedQuitButton:(id)sender
+- (IBAction)didPushedDisclosureButton:(id)sender
+{
+    [NSMenu popUpContextMenu:self.toolButtonActionMenu withEvent:[[NSApplication sharedApplication] currentEvent] forView:nil];
+}
+
+- (IBAction)didSelectQuitItem:(id)sender
 {
     NSLog(@"huh...");
     [[NSApplication sharedApplication] terminate:self];

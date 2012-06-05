@@ -8,6 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SCBMainWindow : NSWindow
+@interface SCBMainWindow : NSPanel
 
 @end
