@@ -38,10 +38,14 @@
     [self.windowController loadMainPage:@"http://localhost:4567"];
 }
 
+- (void)applicationWillResignActive:(NSNotification *)notification
+{
+    [self.windowController hideWindow];
+}
+
 - (void)didClickedStatusItem:(id)sender
 {
-    NSLog(@"huh...");
-    [self.windowController display];
+    [self.windowController toggleDisplayStatus];
 }
 
 @end

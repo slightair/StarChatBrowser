@@ -7,6 +7,7 @@
 //
 
 #import "SCBMainWindowController.h"
+#import "SCBMainWindow.h"
 #import "SCBGrowlClient.h"
 #import "NSData+Base64.h"
 
@@ -33,10 +34,28 @@
     self.mainWebView.resourceLoadDelegate = self;
 }
 
-- (void)display
+- (void)hideWindow
 {
-    [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];    
-    [self.window makeKeyAndOrderFront:self];
+    SCBMainWindow *mainWindow = (SCBMainWindow *)self.window;
+    
+    if (mainWindow.isVisible) {
+        [mainWindow hide];
+    }
+}
+
+- (void)toggleDisplayStatus
+{
+    SCBMainWindow *mainWindow = (SCBMainWindow *)self.window;
+    
+    if (mainWindow.isVisible) {
+        [mainWindow hide];
+    }
+    else {
+        [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+        [self.window makeKeyAndOrderFront:self];
+        
+        [mainWindow show];
+    }
 }
 
 - (void)loadMainPage:(NSString *)URLString
@@ -61,7 +80,6 @@
 
 - (IBAction)didSelectQuitItem:(id)sender
 {
-    NSLog(@"huh...");
     [[NSApplication sharedApplication] terminate:self];
 }
 

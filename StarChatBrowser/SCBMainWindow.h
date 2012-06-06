@@ -8,6 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface SCBMainWindow : NSPanel
+@interface SCBMainWindow : NSPanel <NSAnimationDelegate>
+
+- (void)show;
+- (void)hide;
 
 @end

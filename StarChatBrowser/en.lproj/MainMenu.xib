@@ -42,7 +42,7 @@
 				<int key="NSWindowStyleMask">8223</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{566, 266}, {800, 480}}</string>
-				<int key="NSWTFlags">1954021376</int>
+				<int key="NSWTFlags">-193462272</int>
 				<string key="NSWindowTitle">StarChatBrowser</string>
 				<string key="NSWindowClass">SCBMainWindow</string>
 				<nil key="NSViewClass"/>
@@ -82,31 +82,23 @@
 							<object class="WebPreferences" key="Preferences">
 								<string key="Identifier"/>
 								<dictionary class="NSMutableDictionary" key="Values">
-									<integer value="0" key="WebKitCacheModelPreferenceKey"/>
 									<integer value="12" key="WebKitDefaultFixedFontSize"/>
 									<integer value="12" key="WebKitDefaultFontSize"/>
-									<boolean value="NO" key="WebKitJavaEnabled"/>
-									<boolean value="NO" key="WebKitJavaScriptCanOpenWindowsAutomatically"/>
-									<boolean value="YES" key="WebKitJavaScriptEnabled"/>
 									<integer value="1" key="WebKitMinimumFontSize"/>
-									<boolean value="NO" key="WebKitPluginsEnabled"/>
-									<boolean value="YES" key="WebKitUserStyleSheetEnabledPreferenceKey"/>
-									<string key="WebKitUserStyleSheetLocationPreferenceKey">/System/Library/PrivateFrameworks/Lookup.framework/Resources/LUWebKitModuleStyle.css</string>
 								</dictionary>
 							</object>
 							<bool key="UseBackForwardList">YES</bool>
 							<bool key="AllowsUndo">YES</bool>
 						</object>
-						<object class="NSButton" id="708389076">
+						<object class="NSButton" id="974367263">
 							<reference key="NSNextResponder" ref="439893737"/>
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{16, 7}, {29, 26}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1541</string>
 							<bool key="NSEnabled">YES</bool>
-							<object class="NSButtonCell" key="NSCell" id="325868693">
+							<object class="NSButtonCell" key="NSCell" id="499122498">
 								<int key="NSCellFlags">-2080244224</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents"/>
@@ -116,7 +108,7 @@
 									<int key="NSfFlags">1044</int>
 								</object>
 								<string key="NSCellIdentifier">_NS:1541</string>
-								<reference key="NSControlView" ref="708389076"/>
+								<reference key="NSControlView" ref="974367263"/>
 								<int key="NSButtonFlags">1220825343</int>
 								<int key="NSButtonFlags2">166</int>
 								<string key="NSAlternateContents"/>
@@ -138,42 +130,42 @@
 				<int key="NSWindowCollectionBehavior">1</int>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
-			<object class="NSMenu" id="586223816">
+			<object class="NSMenu" id="882271696">
 				<string key="NSTitle"/>
 				<array class="NSMutableArray" key="NSMenuItems">
-					<object class="NSMenuItem" id="713368068">
-						<reference key="NSMenu" ref="586223816"/>
+					<object class="NSMenuItem" id="182619576">
+						<reference key="NSMenu" ref="882271696"/>
 						<bool key="NSIsDisabled">YES</bool>
 						<string key="NSTitle">Preferences ...</string>
 						<string key="NSKeyEquiv">,</string>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<object class="NSCustomResource" key="NSOnImage" id="364002292">
+						<object class="NSCustomResource" key="NSOnImage" id="347562767">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuCheckmark</string>
 						</object>
-						<object class="NSCustomResource" key="NSMixedImage" id="120619982">
+						<object class="NSCustomResource" key="NSMixedImage" id="69672475">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">NSMenuMixedState</string>
 						</object>
 					</object>
-					<object class="NSMenuItem" id="643517712">
-						<reference key="NSMenu" ref="586223816"/>
+					<object class="NSMenuItem" id="116885563">
+						<reference key="NSMenu" ref="882271696"/>
 						<bool key="NSIsDisabled">YES</bool>
 						<bool key="NSIsSeparator">YES</bool>
 						<string key="NSTitle"/>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="364002292"/>
-						<reference key="NSMixedImage" ref="120619982"/>
+						<reference key="NSOnImage" ref="347562767"/>
+						<reference key="NSMixedImage" ref="69672475"/>
 					</object>
-					<object class="NSMenuItem" id="805744694">
-						<reference key="NSMenu" ref="586223816"/>
+					<object class="NSMenuItem" id="555712973">
+						<reference key="NSMenu" ref="882271696"/>
 						<string key="NSTitle">Quit StarChatBrowser</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<reference key="NSOnImage" ref="364002292"/>
-						<reference key="NSMixedImage" ref="120619982"/>
+						<reference key="NSOnImage" ref="347562767"/>
+						<reference key="NSMixedImage" ref="69672475"/>
 					</object>
 				</array>
 			</object>
@@ -225,7 +217,7 @@
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">toolButtonActionMenu</string>
 						<reference key="source" ref="1000424966"/>
-						<reference key="destination" ref="586223816"/>
+						<reference key="destination" ref="882271696"/>
 					</object>
 					<int key="connectionID">594</int>
 				</object>
@@ -233,7 +225,7 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">didPushedDisclosureButton:</string>
 						<reference key="source" ref="1000424966"/>
-						<reference key="destination" ref="708389076"/>
+						<reference key="destination" ref="974367263"/>
 					</object>
 					<int key="connectionID">595</int>
 				</object>
@@ -241,15 +233,15 @@
 					<object class="IBActionConnection" key="connection">
 						<string key="label">didSelectQuitItem:</string>
 						<reference key="source" ref="1000424966"/>
-						<reference key="destination" ref="805744694"/>
+						<reference key="destination" ref="555712973"/>
 					</object>
 					<int key="connectionID">596</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">menu</string>
-						<reference key="source" ref="708389076"/>
-						<reference key="destination" ref="586223816"/>
+						<reference key="source" ref="974367263"/>
+						<reference key="destination" ref="882271696"/>
 					</object>
 					<int key="connectionID">589</int>
 				</object>
@@ -293,7 +285,7 @@
 						<reference key="object" ref="439893737"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1032006333"/>
-							<reference ref="708389076"/>
+							<reference ref="974367263"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -320,41 +312,41 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">582</int>
-						<reference key="object" ref="708389076"/>
+						<reference key="object" ref="974367263"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="325868693"/>
+							<reference ref="499122498"/>
 						</array>
 						<reference key="parent" ref="439893737"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">583</int>
-						<reference key="object" ref="325868693"/>
-						<reference key="parent" ref="708389076"/>
+						<reference key="object" ref="499122498"/>
+						<reference key="parent" ref="974367263"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">585</int>
-						<reference key="object" ref="586223816"/>
+						<reference key="object" ref="882271696"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="805744694"/>
-							<reference ref="713368068"/>
-							<reference ref="643517712"/>
+							<reference ref="555712973"/>
+							<reference ref="182619576"/>
+							<reference ref="116885563"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">597</int>
-						<reference key="object" ref="713368068"/>
-						<reference key="parent" ref="586223816"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">588</int>
-						<reference key="object" ref="805744694"/>
-						<reference key="parent" ref="586223816"/>
+						<reference key="object" ref="555712973"/>
+						<reference key="parent" ref="882271696"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">598</int>
-						<reference key="object" ref="643517712"/>
-						<reference key="parent" ref="586223816"/>
+						<reference key="object" ref="116885563"/>
+						<reference key="parent" ref="882271696"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">597</int>
+						<reference key="object" ref="182619576"/>
+						<reference key="parent" ref="882271696"/>
 					</object>
 				</array>
 			</object>
@@ -383,7 +375,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">598</int>
+			<int key="maxID">600</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

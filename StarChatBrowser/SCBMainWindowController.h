@@ -13,7 +13,8 @@
 @interface SCBMainWindowController : NSWindowController <SCBUserStreamClientDelegate>
 
 - (void)prepare;
-- (void)display;
+- (void)hideWindow;
+- (void)toggleDisplayStatus;
 - (void)loadMainPage:(NSString *)URLString;
 - (IBAction)didPushedDisclosureButton:(id)sender;
 - (IBAction)didSelectQuitItem:(id)sender;
