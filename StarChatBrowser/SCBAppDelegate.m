@@ -8,6 +8,7 @@
 
 #import "SCBAppDelegate.h"
 #import "SCBGrowlClient.h"
+#import "SCBConstants.h"
 
 @interface SCBAppDelegate ()
 
@@ -35,7 +36,16 @@
     self.statusItem = statusItem;
     
     [self.windowController prepare];
-    [self.windowController loadMainPage:@"http://localhost:4567"];
+    
+    NSString *starchatServerURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSettingsStarChatServerURL];
+    BOOL enableLoadingAtStartup = [[[NSUserDefaults standardUserDefaults] objectForKey:kUserSettingsEnableLoadingAtStartup] boolValue];
+    
+    if (starchatServerURLString && enableLoadingAtStartup) {
+        [self.windowController loadMainPage:starchatServerURLString];
+    }
+    else {
+        [self.windowController showPreferences];
+    }
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification

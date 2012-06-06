@@ -82,9 +82,16 @@
 							<object class="WebPreferences" key="Preferences">
 								<string key="Identifier"/>
 								<dictionary class="NSMutableDictionary" key="Values">
+									<integer value="0" key="WebKitCacheModelPreferenceKey"/>
 									<integer value="12" key="WebKitDefaultFixedFontSize"/>
 									<integer value="12" key="WebKitDefaultFontSize"/>
+									<boolean value="NO" key="WebKitJavaEnabled"/>
+									<boolean value="NO" key="WebKitJavaScriptCanOpenWindowsAutomatically"/>
+									<boolean value="YES" key="WebKitJavaScriptEnabled"/>
 									<integer value="1" key="WebKitMinimumFontSize"/>
+									<boolean value="NO" key="WebKitPluginsEnabled"/>
+									<boolean value="YES" key="WebKitUserStyleSheetEnabledPreferenceKey"/>
+									<string key="WebKitUserStyleSheetLocationPreferenceKey">/System/Library/PrivateFrameworks/Lookup.framework/Resources/LUWebKitModuleStyle.css</string>
 								</dictionary>
 							</object>
 							<bool key="UseBackForwardList">YES</bool>
@@ -135,7 +142,6 @@
 				<array class="NSMutableArray" key="NSMenuItems">
 					<object class="NSMenuItem" id="182619576">
 						<reference key="NSMenu" ref="882271696"/>
-						<bool key="NSIsDisabled">YES</bool>
 						<string key="NSTitle">Preferences ...</string>
 						<string key="NSKeyEquiv">,</string>
 						<int key="NSKeyEquivModMask">1048576</int>
@@ -236,6 +242,14 @@
 						<reference key="destination" ref="555712973"/>
 					</object>
 					<int key="connectionID">596</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">didSelectPreferencesItem:</string>
+						<reference key="source" ref="1000424966"/>
+						<reference key="destination" ref="182619576"/>
+					</object>
+					<int key="connectionID">649</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -375,7 +389,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">600</int>
+			<int key="maxID">649</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -411,11 +425,16 @@
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="didPushedDisclosureButton:">id</string>
+						<string key="didSelectPreferencesItem:">id</string>
 						<string key="didSelectQuitItem:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="didPushedDisclosureButton:">
 							<string key="name">didPushedDisclosureButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSelectPreferencesItem:">
+							<string key="name">didSelectPreferencesItem:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didSelectQuitItem:">

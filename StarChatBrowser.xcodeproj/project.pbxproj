@@ -19,6 +19,8 @@
 		570001C11579D48F008429C9 /* SCBMainWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 570001C01579D48F008429C9 /* SCBMainWindow.m */; };
 		57015BFA1579EAC90033E4C1 /* SCBUserStreamClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57015BF91579EAC90033E4C1 /* SCBUserStreamClient.m */; };
 		571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 571E199B157A12DB005C59CC /* SCBGrowlClient.m */; };
+		57B8F8B3157FC96C008BE56A /* SCBPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B8F8B1157FC96C008BE56A /* SCBPreferencesWindowController.m */; };
+		57B8F8B4157FC96C008BE56A /* SCBPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */; };
 		57C43BDF157A428400518358 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
 		57C43BE2157A433200518358 /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
 		57C43BFE157BC4E300518358 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C43BFD157BC4E300518358 /* NSData+Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -63,6 +65,10 @@
 		571E199A157A12DB005C59CC /* SCBGrowlClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBGrowlClient.h; sourceTree = "<group>"; };
 		571E199B157A12DB005C59CC /* SCBGrowlClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBGrowlClient.m; sourceTree = "<group>"; };
 		571E199D157A1585005C59CC /* GCDSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDSingleton.h; path = Frameworks/GCDSingleton.h; sourceTree = "<group>"; };
+		5765037F157FBE66009282DE /* SCBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBConstants.h; sourceTree = "<group>"; };
+		57B8F8B0157FC96C008BE56A /* SCBPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBPreferencesWindowController.h; sourceTree = "<group>"; };
+		57B8F8B1157FC96C008BE56A /* SCBPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBPreferencesWindowController.m; sourceTree = "<group>"; };
+		57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCBPreferencesWindowController.xib; sourceTree = "<group>"; };
 		57C43BDE157A428400518358 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
 		57C43BFC157BC4E300518358 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Frameworks/NSData+Base64.h"; sourceTree = "<group>"; };
 		57C43BFD157BC4E300518358 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Frameworks/NSData+Base64.m"; sourceTree = "<group>"; };
@@ -142,6 +148,10 @@
 				571E199A157A12DB005C59CC /* SCBGrowlClient.h */,
 				571E199B157A12DB005C59CC /* SCBGrowlClient.m */,
 				570001A41579278E008429C9 /* Supporting Files */,
+				5765037F157FBE66009282DE /* SCBConstants.h */,
+				57B8F8B0157FC96C008BE56A /* SCBPreferencesWindowController.h */,
+				57B8F8B1157FC96C008BE56A /* SCBPreferencesWindowController.m */,
+				57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */,
 			);
 			path = StarChatBrowser;
 			sourceTree = "<group>";
@@ -214,6 +224,7 @@
 				570001A81579278E008429C9 /* InfoPlist.strings in Resources */,
 				570001AE1579278E008429C9 /* Credits.rtf in Resources */,
 				570001B41579278E008429C9 /* MainMenu.xib in Resources */,
+				57B8F8B4157FC96C008BE56A /* SCBPreferencesWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,6 +259,7 @@
 				57015BFA1579EAC90033E4C1 /* SCBUserStreamClient.m in Sources */,
 				571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */,
 				57C43BFE157BC4E300518358 /* NSData+Base64.m in Sources */,
+				57B8F8B3157FC96C008BE56A /* SCBPreferencesWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

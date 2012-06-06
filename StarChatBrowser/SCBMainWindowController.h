@@ -16,7 +16,9 @@
 - (void)hideWindow;
 - (void)toggleDisplayStatus;
 - (void)loadMainPage:(NSString *)URLString;
+- (void)showPreferences;
 - (IBAction)didPushedDisclosureButton:(id)sender;
+- (IBAction)didSelectPreferencesItem:(id)sender;
 - (IBAction)didSelectQuitItem:(id)sender;
 
 @property (assign) IBOutlet WebView *mainWebView;

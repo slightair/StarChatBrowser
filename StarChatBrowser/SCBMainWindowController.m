@@ -9,6 +9,7 @@
 #import "SCBMainWindowController.h"
 #import "SCBMainWindow.h"
 #import "SCBGrowlClient.h"
+#import "SCBPreferencesWindowController.h"
 #import "NSData+Base64.h"
 
 @interface SCBMainWindowController ()
@@ -18,6 +19,7 @@
 @property (strong) NSString *mainPageURLString;
 @property (strong) NSString *authInfo;
 @property (strong) id authRequestResourceIdentifier;
+@property (strong) SCBPreferencesWindowController *preferencesWindowController;
 
 @end
 
@@ -28,6 +30,7 @@
 @synthesize mainPageURLString = _mainPageURLString;
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
+@synthesize preferencesWindowController = _preferencesWindowController;
 
 - (void)prepare
 {
@@ -64,6 +67,16 @@
     [_mainWebView setMainFrameURL:URLString];
 }
 
+- (void)showPreferences
+{
+    if (!self.preferencesWindowController) {
+        self.preferencesWindowController = [[SCBPreferencesWindowController alloc] initWithWindowNibName:@"SCBPreferencesWindowController"];
+    }
+    
+    [self.window addChildWindow:self.preferencesWindowController.window ordered:NSWindowAbove];
+    [self.preferencesWindowController showWindow:self];
+}
+
 - (void)startUserStreamClient:(NSString *)username password:(NSString *)password
 {
     NSURL *baseURL = [NSURL URLWithString:self.mainPageURLString];
@@ -76,6 +89,11 @@
 - (IBAction)didPushedDisclosureButton:(id)sender
 {
     [NSMenu popUpContextMenu:self.toolButtonActionMenu withEvent:[[NSApplication sharedApplication] currentEvent] forView:nil];
+}
+
+- (IBAction)didSelectPreferencesItem:(id)sender
+{
+    [self showPreferences];
 }
 
 - (IBAction)didSelectQuitItem:(id)sender
