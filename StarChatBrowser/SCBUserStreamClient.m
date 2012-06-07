@@ -65,7 +65,6 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    self.connectionStatus = kSCBUserStreamClientConnectionStatusConnected;
     [self.streamParser parse:data];
 }
 
