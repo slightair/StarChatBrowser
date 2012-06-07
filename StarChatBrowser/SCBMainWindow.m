@@ -12,6 +12,8 @@
 
 @implementation SCBMainWindow
 
+@synthesize toolButtonActionMenu = _toolButtonActionMenu;
+
 - (void)show
 {
     if (self.isVisible) {
@@ -63,6 +65,16 @@
 - (BOOL)canBecomeKeyWindow
 {
     return YES;
+}
+
+- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
+{
+    BOOL isMatchKeyEquivalent = [super performKeyEquivalent:theEvent];
+    if (isMatchKeyEquivalent) {
+        return isMatchKeyEquivalent;
+    }
+    
+    return [self.toolButtonActionMenu performKeyEquivalent:theEvent];
 }
 
 @end

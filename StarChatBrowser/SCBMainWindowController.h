@@ -17,7 +17,8 @@
 - (void)toggleDisplayStatus;
 - (void)loadMainPage:(NSString *)URLString;
 - (void)showPreferences;
-- (IBAction)didPushedDisclosureButton:(id)sender;
+- (IBAction)didPushedRefreshButton:(id)sender;
+- (IBAction)didPushedActionButton:(id)sender;
 - (IBAction)didSelectPreferencesItem:(id)sender;
 - (IBAction)didSelectQuitItem:(id)sender;
 

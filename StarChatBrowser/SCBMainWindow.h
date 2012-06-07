@@ -13,4 +13,6 @@
 - (void)show;
 - (void)hide;
 
+@property (assign) IBOutlet NSMenu *toolButtonActionMenu;
+
 @end

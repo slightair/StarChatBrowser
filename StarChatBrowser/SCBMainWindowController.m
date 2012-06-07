@@ -14,6 +14,7 @@
 
 @interface SCBMainWindowController ()
 
+- (void)refreshMainWebView;
 - (void)startUserStreamClient:(NSString *)username password:(NSString *)password;
 
 @property (strong) NSString *mainPageURLString;
@@ -64,7 +65,12 @@
 - (void)loadMainPage:(NSString *)URLString
 {
     self.mainPageURLString = URLString;
-    [_mainWebView setMainFrameURL:URLString];
+    [self.mainWebView setMainFrameURL:URLString];
+}
+
+- (void)refreshMainWebView
+{
+    [self.mainWebView reload:self];
 }
 
 - (void)showPreferences
@@ -86,7 +92,12 @@
     [client start];
 }
 
-- (IBAction)didPushedDisclosureButton:(id)sender
+- (IBAction)didPushedRefreshButton:(id)sender
+{
+    [self refreshMainWebView];
+}
+
+- (IBAction)didPushedActionButton:(id)sender
 {
     [NSMenu popUpContextMenu:self.toolButtonActionMenu withEvent:[[NSApplication sharedApplication] currentEvent] forView:nil];
 }
