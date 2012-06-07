@@ -9,10 +9,13 @@
 #import "SCBAppDelegate.h"
 #import "SCBGrowlClient.h"
 #import "SCBConstants.h"
+#import "SCBHotkeyMonitor.h"
+#import <Carbon/Carbon.h>
 
 @interface SCBAppDelegate ()
 
 @property (strong) NSStatusItem *statusItem;
+@property (strong) SCBHotkeyMonitor *hotkeyMonitor;
 
 @end
 
@@ -23,6 +26,7 @@
 
 @synthesize windowController = _windowController;
 @synthesize statusItem = _statusItem;
+@synthesize hotkeyMonitor = _hotkeyMonitor;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -34,8 +38,19 @@
     statusItem.action = @selector(didClickedStatusItem:);
     
     self.statusItem = statusItem;
-    
+
     [self.windowController prepare];
+    
+    self.hotkeyMonitor = [[SCBHotkeyMonitor alloc] init];
+    [self.hotkeyMonitor setup];
+    [self.hotkeyMonitor registerHotkey:kVK_ANSI_S 
+                       modifierKeyCode:controlKey 
+                               handler:^{
+                                   [self.windowController toggleDisplayStatus];
+                               }
+     ];
+    
+    
     
     NSString *starchatServerURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSettingsStarChatServerURL];
     BOOL enableLoadingAtStartup = [[[NSUserDefaults standardUserDefaults] objectForKey:kUserSettingsEnableLoadingAtStartup] boolValue];
@@ -56,6 +71,10 @@
 - (void)didClickedStatusItem:(id)sender
 {
     [self.windowController toggleDisplayStatus];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [self.hotkeyMonitor unregisterAllHotkeys];
 }
 
 @end
