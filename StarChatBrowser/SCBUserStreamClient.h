@@ -14,7 +14,8 @@ typedef enum {
     kSCBUserStreamClientConnectionStatusNone,
     kSCBUserStreamClientConnectionStatusConnecting,
     kSCBUserStreamClientConnectionStatusConnected,
-    kSCBUserStreamClientConnectionStatusDisconnected
+    kSCBUserStreamClientConnectionStatusDisconnected,
+    kSCBUserStreamClientConnectionStatusFailed
 } SCBUserStreamClientConnectionStatus;
 
 @class SCBUserStreamClient;
@@ -22,14 +23,17 @@ typedef enum {
 @protocol SCBUserStreamClientDelegate <NSObject>
 - (void)userStreamClient:(SCBUserStreamClient *)client didReceivedUserInfo:(NSDictionary *)userInfo;
 @optional
+- (void)userStreamClientWillConnect:(SCBUserStreamClient *)client;
 - (void)userStreamClientDidConnected:(SCBUserStreamClient *)client;
 - (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client;
+- (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error;
 @end
 
 @interface SCBUserStreamClient : AFHTTPClient <NSURLConnectionDelegate, SBJsonStreamParserAdapterDelegate>
 
 - (id)initWithBaseURL:(NSURL *)url username:(NSString *)username;
 - (void)start;
+- (void)reconnect;
 
 @property (assign) id <SCBUserStreamClientDelegate> delegate;
 @property (readonly) SCBUserStreamClientConnectionStatus connectionStatus;

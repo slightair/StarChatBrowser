@@ -48,9 +48,17 @@
 {
     NSMutableURLRequest *request = [self requestWithMethod:@"GET" path:[NSString stringWithFormat:@"/users/%@/stream", self.username] parameters:nil];
     
-    NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
     self.connectionStatus = kSCBUserStreamClientConnectionStatusConnecting;
-    [connection start];
+    if ([self.delegate respondsToSelector:@selector(userStreamClientWillConnect:)]) {
+        [self.delegate userStreamClientWillConnect:self];
+    }
+    
+    [NSURLConnection connectionWithRequest:request delegate:self];
+}
+
+- (void)reconnect
+{
+    [self start];
 }
 
 #pragma mark -
@@ -70,8 +78,8 @@
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
     self.connectionStatus = kSCBUserStreamClientConnectionStatusDisconnected;
-    if ([self.delegate respondsToSelector:@selector(userStreamClientDidDisconnected:)]) {
-        [self.delegate userStreamClientDidDisconnected:self];
+    if ([self.delegate respondsToSelector:@selector(userStreamClient:didFailWithError:)]) {
+        [self.delegate userStreamClient:self didFailWithError:error];
     }
 }
 

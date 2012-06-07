@@ -97,7 +97,6 @@
     if (self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusNone || self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusDisconnected) {
         [self.userStreamClient start];
     }
-    
 }
 
 - (IBAction)didPushedRefreshButton:(id)sender
@@ -132,6 +131,11 @@
         
         [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description context:nil];
     }
+}
+
+- (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client
+{
+    [client reconnect];
 }
 
 #pragma mark -
