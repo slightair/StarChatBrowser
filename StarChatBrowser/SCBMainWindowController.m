@@ -21,6 +21,7 @@
 @property (strong) NSString *authInfo;
 @property (strong) id authRequestResourceIdentifier;
 @property (strong) SCBPreferencesWindowController *preferencesWindowController;
+@property (strong) SCBUserStreamClient *userStreamClient;
 
 @end
 
@@ -32,6 +33,7 @@
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
 @synthesize preferencesWindowController = _preferencesWindowController;
+@synthesize userStreamClient = _userStreamClient;
 
 - (void)prepare
 {
@@ -86,10 +88,16 @@
 - (void)startUserStreamClient:(NSString *)username password:(NSString *)password
 {
     NSURL *baseURL = [NSURL URLWithString:self.mainPageURLString];
-    SCBUserStreamClient *client = [[SCBUserStreamClient alloc] initWithBaseURL:baseURL username:username];
-    [client setAuthorizationHeaderWithUsername:username password:password];
-    client.delegate = self;
-    [client start];
+    if (!self.userStreamClient) {
+        self.userStreamClient = [[SCBUserStreamClient alloc] initWithBaseURL:baseURL username:username];
+        self.userStreamClient.delegate = self;
+        [self.userStreamClient setAuthorizationHeaderWithUsername:username password:password];
+    }
+
+    if (self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusNone || self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusDisconnected) {
+        [self.userStreamClient start];
+    }
+    
 }
 
 - (IBAction)didPushedRefreshButton:(id)sender
