@@ -29,7 +29,7 @@ typedef enum {
 - (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error;
 @end
 
-@interface SCBUserStreamClient : AFHTTPClient <NSURLConnectionDelegate, SBJsonStreamParserAdapterDelegate>
+@interface SCBUserStreamClient : AFHTTPClient <SBJsonStreamParserAdapterDelegate>
 
 - (id)initWithBaseURL:(NSURL *)url username:(NSString *)username;
 - (void)start;
