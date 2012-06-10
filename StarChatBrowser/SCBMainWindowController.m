@@ -94,7 +94,9 @@
         [self.userStreamClient setAuthorizationHeaderWithUsername:username password:password];
     }
 
-    if (self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusNone || self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusDisconnected) {
+    if (self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusNone ||
+        self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusDisconnected ||
+        self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusFailed) {
         [self.userStreamClient start];
     }
 }
