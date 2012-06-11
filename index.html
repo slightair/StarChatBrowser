@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>StarChatBrowser by slightair</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/slightair/StarChatBrowser">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/slightair/StarChatBrowser/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/slightair/StarChatBrowser/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>StarChatBrowser</h1>
+          <p>StarChat を見るのが楽になるかもしれない MacOSX 向けアプリケーション</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/slightair">slightair</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>StarChatBrowser</h1>
+
+<p>StarChatBrowser とは StarChat (<a href="https://github.com/hajimehoshi/star-chat">https://github.com/hajimehoshi/star-chat</a>) を見るのが楽になるかもしれないMacOSX 向けアプリケーションです。</p>
+
+<h2>機能</h2>
+
+<ul>
+<li>ステータスバー（画面右上にアイコンがならんでいるやつ）から StarChat を呼び出すことができます。</li>
+<li>ウインドウの WebView に StarChat を表示します。</li>
+<li>自分が参加しているチャンネルの更新を見て Growl で通知します。</li>
+</ul><h2>スクリーンショット</h2>
+
+<p><img src="./images/screenshot.png" alt="screenshot"></p>
+
+<h2>バージョン情報</h2>
+
+<ul>
+<li>0.1.2 / 2012.06.12
+
+<ul>
+<li>ユーザストリームAPIへの接続を保ち続けるために、10分おきに接続を作り直すようにした</li>
+<li>Growl の通知をクリックするとその通知のチャンネルを開くようにした</li>
+<li>自分の発言は Growl で通知しないようにした</li>
+</ul>
+</li>
+<li>0.1.1 / 2012.06.08
+
+<ul>
+<li>ユーザストリームAPIに複数接続してしまう不具合を修正した</li>
+<li>WebView での進む、戻るを使えないようにした</li>
+</ul>
+</li>
+<li>0.1.0 / 2012.06.06
+
+<ul>
+<li>初版</li>
+</ul>
+</li>
+</ul><h2>開発者向け情報</h2>
+
+<p>StarChatBrowser は CocoaPods を使っています。
+ビルドする前に以下のコマンドを叩きましょう。
+もし、CocoaPods をインストールしていない場合は、インストールしてください。</p>
+
+<pre><code>&gt; pod install StarChatBrowser.xcodeproj
+&gt; open StarChatBrowser.xcworkspace 
+</code></pre>
+
+<p>プロジェクトを開くのは xcworkspace の方です。</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
