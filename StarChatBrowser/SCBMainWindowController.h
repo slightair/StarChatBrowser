@@ -13,6 +13,7 @@
 @interface SCBMainWindowController : NSWindowController <SCBUserStreamClientDelegate>
 
 - (void)prepare;
+- (void)showWindow;
 - (void)hideWindow;
 - (void)toggleDisplayStatus;
 - (void)loadMainPage:(NSString *)URLString;

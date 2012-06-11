@@ -8,8 +8,12 @@
 
 #import "GCDSingleton.h"
 #import "SCBGrowlClient.h"
+#import "SCBConstants.h"
 
 #define kGrowlNewMessageNotificationName @"NewMessageNotification"
+
+#define kGrowlClickContextKeyNotificationName @"ClickContextKeyNotificationName"
+#define kGrowlClickContextKeyUserInfo @"ClickContextKeyUserInfo"
 
 @interface SCBGrowlClient ()
 
@@ -33,15 +37,20 @@
     return self;
 }
 
-- (void)notifyNewMessageWithTitle:(NSString *)title description:(NSString *)description context:(id)context
+- (void)notifyNewMessageWithTitle:(NSString *)title description:(NSString *)description userInfo:(NSDictionary *)userInfo
 {
+    NSDictionary *clickContext = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  kGrowlNewMessageNotificationName, kGrowlClickContextKeyNotificationName,
+                                  userInfo, kGrowlClickContextKeyUserInfo,
+                                  nil];
+    
     [GrowlApplicationBridge notifyWithTitle:title
                                 description:description
                            notificationName:kGrowlNewMessageNotificationName
                                    iconData:nil
                                    priority:0
                                    isSticky:NO
-                               clickContext:context];
+                               clickContext:clickContext];
 }
 
 #pragma mark -
@@ -61,7 +70,14 @@
 
 - (void)growlNotificationWasClicked:(id)clickContext
 {
+    NSString *notificationName = [(NSDictionary *)clickContext objectForKey:kGrowlClickContextKeyNotificationName];
+    NSDictionary *userInfo = [(NSDictionary *)clickContext objectForKey:kGrowlClickContextKeyUserInfo];
     
+    if ([notificationName isEqualToString:kGrowlNewMessageNotificationName]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSCBNotificationClickedGrowlNewMessageNotification
+                                                            object:self
+                                                          userInfo:userInfo];
+    }
 }
 
 - (void)growlNotificationTimedOut:(id)clickContext

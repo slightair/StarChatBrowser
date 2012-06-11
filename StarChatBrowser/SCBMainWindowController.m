@@ -8,6 +8,7 @@
 
 #import "SCBMainWindowController.h"
 #import "SCBMainWindow.h"
+#import "SCBConstants.h"
 #import "SCBGrowlClient.h"
 #import "SCBPreferencesWindowController.h"
 #import "NSData+Base64.h"
@@ -16,6 +17,7 @@
 
 - (void)refreshMainWebView;
 - (void)startUserStreamClient:(NSString *)username password:(NSString *)password;
+- (void)didClickedGrowlNewMessageNotification:(NSNotification *)notification;
 
 @property (strong) NSString *mainPageURLString;
 @property (strong) NSString *authInfo;
@@ -38,6 +40,24 @@
 - (void)prepare
 {
     self.mainWebView.resourceLoadDelegate = self;
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(didClickedGrowlNewMessageNotification:)
+                               name:kSCBNotificationClickedGrowlNewMessageNotification
+                             object:[SCBGrowlClient sharedClient]];
+}
+
+- (void)showWindow
+{
+    SCBMainWindow *mainWindow = (SCBMainWindow *)self.window;
+    
+    if (!mainWindow.isVisible) {
+        [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+        [self.window makeKeyAndOrderFront:self];
+        
+        [mainWindow show];
+    }
 }
 
 - (void)hideWindow
@@ -122,6 +142,15 @@
 }
 
 #pragma mark -
+#pragma mark Notification selectors
+
+- (void)didClickedGrowlNewMessageNotification:(NSNotification *)notification
+{
+    NSLog(@"%@", notification);
+    [self showWindow];
+}
+
+#pragma mark -
 #pragma mark SCBUserStreamClientDelegate Methods
 
 - (void)userStreamClient:(SCBUserStreamClient *)client didReceivedUserInfo:(NSDictionary *)userInfo
@@ -131,7 +160,7 @@
         NSString *title = [message objectForKey:@"channel_name"];
         NSString *description = [NSString stringWithFormat:@"%@: %@", [message objectForKey:@"user_name"], [message objectForKey:@"body"]];
         
-        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description context:nil];
+        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description userInfo:userInfo];
     }
 }
 

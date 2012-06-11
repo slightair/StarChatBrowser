@@ -12,6 +12,6 @@
 @interface SCBGrowlClient : NSObject <GrowlApplicationBridgeDelegate>
 
 + (id)sharedClient;
-- (void)notifyNewMessageWithTitle:(NSString *)title description:(NSString *)description context:(id)context;
+- (void)notifyNewMessageWithTitle:(NSString *)title description:(NSString *)description userInfo:(NSDictionary *)userInfo;
 
 @end

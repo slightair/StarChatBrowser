@@ -6,5 +6,9 @@
 //  Copyright (c) 2012 slightair. All rights reserved.
 //
 
+// User Settings
 #define kUserSettingsStarChatServerURL @"StarChatServerURL"
 #define kUserSettingsEnableLoadingAtStartup @"EnableLoadingAtStartup"
+
+// Notification Center
+#define kSCBNotificationClickedGrowlNewMessageNotification @"ClickedGrowlNewMessageNotification"
