@@ -16,6 +16,7 @@
 @interface SCBMainWindowController ()
 
 - (void)refreshMainWebView;
+- (void)moveChannel:(NSString *)channel;
 - (void)startUserStreamClient:(NSString *)username password:(NSString *)password;
 - (void)didClickedGrowlNewMessageNotification:(NSNotification *)notification;
 
@@ -90,6 +91,12 @@
     [self.mainWebView setMainFrameURL:URLString];
 }
 
+- (void)moveChannel:(NSString *)channel
+{
+    NSString *urlString = [[self.mainPageURLString stringByAppendingPathComponent:@"#channels"] stringByAppendingPathComponent:channel];
+    [self.mainWebView setMainFrameURL:urlString];
+}
+
 - (void)refreshMainWebView
 {
     [self.mainWebView reload:self];
@@ -146,7 +153,10 @@
 
 - (void)didClickedGrowlNewMessageNotification:(NSNotification *)notification
 {
-    NSLog(@"%@", notification);
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *channel = [[userInfo objectForKey:@"message"] objectForKey:@"channel_name"];
+    
+    [self moveChannel:channel];
     [self showWindow];
 }
 
