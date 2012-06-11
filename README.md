@@ -3,7 +3,7 @@ StarChatBrowser
 
 StarChatBrowser とは StarChat (https://github.com/hajimehoshi/star-chat) を見るのが楽になるかもしれないMacOSX 向けアプリケーションです。
 
-全然できてません。
+詳しくはこちら http://slightair.github.com/StarChatBrowser/
 
 機能
 ----
