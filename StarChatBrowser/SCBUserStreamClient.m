@@ -9,6 +9,7 @@
 #import "SCBUserStreamClient.h"
 
 #define kClientBufferSize 2048
+#define kReconnectInterval 600
 
 // CFNetwork CFReadStreamClientCallBack
 void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo);
@@ -16,11 +17,14 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @interface SCBUserStreamClient ()
 
 - (void)releaseReadStream;
+- (void)connectUserStreamAPI;
 
 @property (strong) NSString *username;
 @property (strong) SBJsonStreamParserAdapter *streamParserAdapter;
 @property (strong) SBJsonStreamParser *streamParser;
 @property          SCBUserStreamClientConnectionStatus connectionStatus;
+@property (strong) NSTimer *reconnectTimer;
+@property          NSInteger lastMessageReceived;
 
 // AFHTTPClient
 @property (readwrite, nonatomic, retain) NSMutableDictionary *defaultHeaders;
@@ -37,6 +41,8 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize streamParser = _streamParser;
 @synthesize delegate = _delegate;
 @synthesize connectionStatus = _connectionStatus;
+@synthesize reconnectTimer = _reconnectTimer;
+@synthesize lastMessageReceived = _lastMessageReceived;
 
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
@@ -56,18 +62,44 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         self.streamParserAdapter = adapter;
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
+        self.lastMessageReceived = -1;
     }
     return self;
 }
 
 - (void)start
 {
+    if ([self.reconnectTimer isValid]) {
+        [self.reconnectTimer invalidate];
+    }
+    
+    [self connectUserStreamAPI];
+    self.reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:kReconnectInterval
+                                                              target:self
+                                                            selector:@selector(connectUserStreamAPI)
+                                                            userInfo:nil
+                                                             repeats:YES];
+}
+
+- (void)connectUserStreamAPI
+{
+    if (_readStreamRef) {
+        CFReadStreamUnscheduleFromRunLoop(_readStreamRef, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+        CFReadStreamClose(_readStreamRef);
+        [self releaseReadStream];
+    }
+    
     self.connectionStatus = kSCBUserStreamClientConnectionStatusConnecting;
     if ([self.delegate respondsToSelector:@selector(userStreamClientWillConnect:)]) {
         [self.delegate userStreamClientWillConnect:self];
     }
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream", self.username] relativeToURL:self.baseURL];
+    NSString *query = @"";
+    if (self.lastMessageReceived != -1) {
+        query = [NSString stringWithFormat:@"?start_time=%ld", self.lastMessageReceived + 1];
+    }
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream%@", self.username, query] relativeToURL:self.baseURL];
     CFURLRef urlRef = CFURLCreateWithString(kCFAllocatorDefault, (__bridge CFStringRef)[url absoluteString], NULL);
     
     CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("GET"), urlRef, kCFHTTPVersion1_1);
@@ -94,11 +126,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     CFRelease(urlRef);
 }
 
-- (void)reconnect
-{
-    [self start];
-}
-
 - (void)releaseReadStream
 {
     if (_readStreamRef) {
@@ -109,6 +136,10 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)dealloc
 {
+    if ([self.reconnectTimer isValid]) {
+        [self.reconnectTimer invalidate];
+    }
+    
     if (_readStreamRef) {
         CFRelease(_readStreamRef);
     }
@@ -119,6 +150,12 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)parser:(SBJsonStreamParser *)parser foundObject:(NSDictionary *)dict
 {
+    // TODO - すべての通知にサーバ時刻が入ってくれるとうれしいのだけど
+    if ([[dict objectForKey:@"type"] isEqualToString:@"message"]) {
+        NSDictionary *message = [dict objectForKey:@"message"];
+        self.lastMessageReceived = [[message objectForKey:@"created_at"] longValue];
+    }
+    
     if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedUserInfo:)]) {
         [self.delegate userStreamClient:self didReceivedUserInfo:dict];
     }

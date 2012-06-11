@@ -33,7 +33,6 @@ typedef enum {
 
 - (id)initWithBaseURL:(NSURL *)url username:(NSString *)username;
 - (void)start;
-- (void)reconnect;
 
 @property (assign) id <SCBUserStreamClientDelegate> delegate;
 @property (readonly) SCBUserStreamClientConnectionStatus connectionStatus;

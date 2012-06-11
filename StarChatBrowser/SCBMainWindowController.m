@@ -137,7 +137,7 @@
 
 - (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client
 {
-    [client reconnect];
+    [client start];
 }
 
 #pragma mark -
