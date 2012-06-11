@@ -23,6 +23,7 @@
 @property (strong) NSString *mainPageURLString;
 @property (strong) NSString *authInfo;
 @property (strong) id authRequestResourceIdentifier;
+@property (strong) NSString *username;
 @property (strong) SCBPreferencesWindowController *preferencesWindowController;
 @property (strong) SCBUserStreamClient *userStreamClient;
 
@@ -35,6 +36,7 @@
 @synthesize mainPageURLString = _mainPageURLString;
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
+@synthesize username = _username;
 @synthesize preferencesWindowController = _preferencesWindowController;
 @synthesize userStreamClient = _userStreamClient;
 
@@ -167,6 +169,11 @@
 {
     if ([[userInfo objectForKey:@"type"] isEqualToString:@"message"]) {
         NSDictionary *message = [userInfo objectForKey:@"message"];
+        
+        if ([[message objectForKey:@"user_name"] isEqualToString:self.username]) {
+            return;
+        }
+        
         NSString *title = [message objectForKey:@"channel_name"];
         NSString *description = [NSString stringWithFormat:@"%@: %@", [message objectForKey:@"user_name"], [message objectForKey:@"body"]];
         
@@ -204,6 +211,7 @@
         NSString *username = [authInfoParams objectAtIndex:0];
         NSString *password = [authInfoParams objectAtIndex:1];
         
+        self.username = username;
         [self startUserStreamClient:username password:password];
         
         self.authInfo = nil;
