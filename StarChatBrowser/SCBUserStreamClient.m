@@ -24,7 +24,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @property (strong) SBJsonStreamParser *streamParser;
 @property          SCBUserStreamClientConnectionStatus connectionStatus;
 @property (strong) NSTimer *reconnectTimer;
-@property          NSInteger lastMessageReceived;
 
 // AFHTTPClient
 @property (readwrite, nonatomic, retain) NSMutableDictionary *defaultHeaders;
@@ -42,7 +41,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize delegate = _delegate;
 @synthesize connectionStatus = _connectionStatus;
 @synthesize reconnectTimer = _reconnectTimer;
-@synthesize lastMessageReceived = _lastMessageReceived;
+@synthesize lastReceivedMessageCreatedAt = _lastMessageReceived;
 
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
@@ -62,7 +61,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         self.streamParserAdapter = adapter;
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
-        self.lastMessageReceived = -1;
+        self.lastReceivedMessageCreatedAt = -1;
     }
     return self;
 }
@@ -95,8 +94,8 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     }
     
     NSString *query = @"";
-    if (self.lastMessageReceived != -1) {
-        query = [NSString stringWithFormat:@"?start_time=%ld", self.lastMessageReceived + 1];
+    if (self.lastReceivedMessageCreatedAt != -1) {
+        query = [NSString stringWithFormat:@"?start_time=%ld", self.lastReceivedMessageCreatedAt + 1];
     }
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream%@", self.username, query] relativeToURL:self.baseURL];
@@ -153,7 +152,11 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     // TODO - すべての通知にサーバ時刻が入ってくれるとうれしいのだけど
     if ([[dict objectForKey:@"type"] isEqualToString:@"message"]) {
         NSDictionary *message = [dict objectForKey:@"message"];
-        self.lastMessageReceived = [[message objectForKey:@"created_at"] longValue];
+        NSInteger createdAt = [[message objectForKey:@"created_at"] integerValue];
+        
+        if (createdAt > self.lastReceivedMessageCreatedAt) {
+            self.lastReceivedMessageCreatedAt = createdAt;
+        }
     }
     
     if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedUserInfo:)]) {
@@ -226,5 +229,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
             
             break;
         }
+        default: ;
     }
 }
