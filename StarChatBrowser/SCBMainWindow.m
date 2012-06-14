@@ -67,15 +67,5 @@
     return YES;
 }
 
-- (BOOL)performKeyEquivalent:(NSEvent *)theEvent
-{
-    BOOL isMatchKeyEquivalent = [super performKeyEquivalent:theEvent];
-    if (isMatchKeyEquivalent) {
-        return isMatchKeyEquivalent;
-    }
-    
-    return [self.toolButtonActionMenu performKeyEquivalent:theEvent];
-}
-
 @end
 
