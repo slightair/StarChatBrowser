@@ -87,15 +87,17 @@
     }
 }
 
-- (void)loadMainPage:(NSString *)URLString
+- (void)loadMainPage:(NSString *)urlString
 {
-    self.mainPageURLString = URLString;
-    [self.mainWebView setMainFrameURL:URLString];
+    self.mainPageURLString = urlString;
+    [self.mainWebView setMainFrameURL:urlString];
 }
 
 - (void)moveChannel:(NSString *)channel
 {
-    NSString *urlString = [[self.mainPageURLString stringByAppendingPathComponent:@"#channels"] stringByAppendingPathComponent:channel];
+    NSString *encodedChannelName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)channel, NULL, CFSTR (";,/?:@&=+$#"), kCFStringEncodingUTF8);
+    NSString *urlString = [[self.mainPageURLString stringByAppendingPathComponent:@"#channels"] stringByAppendingPathComponent:encodedChannelName];
+    
     [self.mainWebView setMainFrameURL:urlString];
 }
 

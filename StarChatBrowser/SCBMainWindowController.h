@@ -16,7 +16,7 @@
 - (void)showWindow;
 - (void)hideWindow;
 - (void)toggleDisplayStatus;
-- (void)loadMainPage:(NSString *)URLString;
+- (void)loadMainPage:(NSString *)urlString;
 - (void)showPreferences;
 - (IBAction)didPushedRefreshButton:(id)sender;
 - (IBAction)didPushedActionButton:(id)sender;
