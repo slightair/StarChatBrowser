@@ -149,7 +149,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)parser:(SBJsonStreamParser *)parser foundObject:(NSDictionary *)dict
 {
-    BOOL isNewNotification = YES;
     if ([[dict objectForKey:@"type"] isEqualToString:@"message"]) {
         NSDictionary *message = [dict objectForKey:@"message"];
         NSInteger messageId = [[message objectForKey:@"id"] integerValue];
@@ -157,16 +156,10 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         if (messageId > self.lastReceivedMessageId) {
             self.lastReceivedMessageId = messageId;
         }
-        else {
-            isNewNotification = NO;
-        }
     }
     
-    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:dict];
-    [userInfo setObject:[NSNumber numberWithBool:isNewNotification] forKey:@"isNewNotification"];
-    
     if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedUserInfo:)]) {
-        [self.delegate userStreamClient:self didReceivedUserInfo:userInfo];
+        [self.delegate userStreamClient:self didReceivedUserInfo:dict];
     }
 }
 

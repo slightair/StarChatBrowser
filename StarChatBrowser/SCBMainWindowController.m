@@ -180,9 +180,7 @@
         NSString *title = [message objectForKey:@"channel_name"];
         NSString *description = [NSString stringWithFormat:@"%@: %@", [message objectForKey:@"user_name"], [message objectForKey:@"body"]];
         
-        if ([[userInfo objectForKey:@"isNewNotification"] boolValue]) {
-            [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description userInfo:userInfo];
-        }
+        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description userInfo:userInfo];
     }
 }
 
