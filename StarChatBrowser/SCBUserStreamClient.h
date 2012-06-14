@@ -36,6 +36,6 @@ typedef enum {
 
 @property (assign)   id <SCBUserStreamClientDelegate> delegate;
 @property (readonly) SCBUserStreamClientConnectionStatus connectionStatus;
-@property            NSInteger lastReceivedMessageCreatedAt;
+@property            NSInteger lastReceivedMessageId;
 
 @end

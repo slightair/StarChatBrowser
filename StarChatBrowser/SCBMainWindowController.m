@@ -177,7 +177,7 @@
         NSString *title = [message objectForKey:@"channel_name"];
         NSString *description = [NSString stringWithFormat:@"%@: %@", [message objectForKey:@"user_name"], [message objectForKey:@"body"]];
         
-        if ([[message objectForKey:@"created_at"] integerValue] == client.lastReceivedMessageCreatedAt) {
+        if ([[userInfo objectForKey:@"isNewNotification"] boolValue]) {
             [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description userInfo:userInfo];
         }
     }

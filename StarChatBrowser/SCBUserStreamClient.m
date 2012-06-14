@@ -41,7 +41,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize delegate = _delegate;
 @synthesize connectionStatus = _connectionStatus;
 @synthesize reconnectTimer = _reconnectTimer;
-@synthesize lastReceivedMessageCreatedAt = _lastMessageReceived;
+@synthesize lastReceivedMessageId = _lastReceivedMessageId;
 
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
@@ -61,7 +61,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         self.streamParserAdapter = adapter;
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
-        self.lastReceivedMessageCreatedAt = -1;
+        self.lastReceivedMessageId = -1;
     }
     return self;
 }
@@ -94,8 +94,8 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     }
     
     NSString *query = @"";
-    if (self.lastReceivedMessageCreatedAt != -1) {
-        query = [NSString stringWithFormat:@"?start_time=%ld", self.lastReceivedMessageCreatedAt + 1];
+    if (self.lastReceivedMessageId != -1) {
+        query = [NSString stringWithFormat:@"?start_message_id=%ld", self.lastReceivedMessageId + 1];
     }
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream%@", self.username, query] relativeToURL:self.baseURL];
@@ -149,18 +149,24 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)parser:(SBJsonStreamParser *)parser foundObject:(NSDictionary *)dict
 {
-    // TODO - すべての通知にサーバ時刻が入ってくれるとうれしいのだけど
+    BOOL isNewNotification = YES;
     if ([[dict objectForKey:@"type"] isEqualToString:@"message"]) {
         NSDictionary *message = [dict objectForKey:@"message"];
-        NSInteger createdAt = [[message objectForKey:@"created_at"] integerValue];
+        NSInteger messageId = [[message objectForKey:@"id"] integerValue];
         
-        if (createdAt > self.lastReceivedMessageCreatedAt) {
-            self.lastReceivedMessageCreatedAt = createdAt;
+        if (messageId > self.lastReceivedMessageId) {
+            self.lastReceivedMessageId = messageId;
+        }
+        else {
+            isNewNotification = NO;
         }
     }
     
+    NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:dict];
+    [userInfo setObject:[NSNumber numberWithBool:isNewNotification] forKey:@"isNewNotification"];
+    
     if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedUserInfo:)]) {
-        [self.delegate userStreamClient:self didReceivedUserInfo:dict];
+        [self.delegate userStreamClient:self didReceivedUserInfo:userInfo];
     }
 }
 
