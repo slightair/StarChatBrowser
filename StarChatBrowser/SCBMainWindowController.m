@@ -95,8 +95,9 @@
 
 - (void)moveChannel:(NSString *)channel
 {
-    NSString *encodedChannelName = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)channel, NULL, CFSTR (";,/?:@&=+$#"), kCFStringEncodingUTF8);
-    NSString *urlString = [[self.mainPageURLString stringByAppendingPathComponent:@"#channels"] stringByAppendingPathComponent:encodedChannelName];
+    CFStringRef encodedChannelName = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)channel, NULL, CFSTR (";,/?:@&=+$#"), kCFStringEncodingUTF8);
+    NSString *urlString = [[self.mainPageURLString stringByAppendingPathComponent:@"#channels"] stringByAppendingPathComponent:(__bridge NSString *)encodedChannelName];
+    CFRelease(encodedChannelName);
     
     [self.mainWebView setMainFrameURL:urlString];
 }
