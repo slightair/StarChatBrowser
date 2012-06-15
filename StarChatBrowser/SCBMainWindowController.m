@@ -43,6 +43,7 @@
 - (void)prepare
 {
     self.mainWebView.resourceLoadDelegate = self;
+    self.mainWebView.UIDelegate = self;
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
@@ -220,6 +221,33 @@
         self.authInfo = nil;
         self.authRequestResourceIdentifier = nil;
     }
+}
+
+#pragma mark -
+#pragma mark WebUIDelegate Methods
+
+- (BOOL)webView:(WebView *)sender runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame
+{
+    WebDataSource *dataSource = [frame dataSource] ? [frame dataSource] : [frame provisionalDataSource];
+    NSString *host = dataSource.response.URL.host ? dataSource.response.URL.host : @"JavaScript";
+    
+    NSAlert *alert = [NSAlert alertWithMessageText:host defaultButton:@"OK" alternateButton:@"Cancel" otherButton:nil informativeTextWithFormat:message];
+    
+    if ([alert runModal] == NSAlertDefaultReturn) {
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
+- (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame
+{
+    WebDataSource *dataSource = [frame dataSource] ? [frame dataSource] : [frame provisionalDataSource];
+    NSString *host = dataSource.response.URL.host ? dataSource.response.URL.host : @"JavaScript";
+    
+    NSAlert *alert = [NSAlert alertWithMessageText:host defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:message];
+    [alert runModal];
 }
 
 @end
