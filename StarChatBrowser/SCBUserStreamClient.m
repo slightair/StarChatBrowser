@@ -80,6 +80,24 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
                                                              repeats:YES];
 }
 
+- (void)stop
+{
+    if ([self.reconnectTimer isValid]) {
+        [self.reconnectTimer invalidate];
+    }
+    
+    if (_readStreamRef) {
+        CFReadStreamUnscheduleFromRunLoop(_readStreamRef, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
+        CFReadStreamClose(_readStreamRef);
+        [self releaseReadStream];
+    }
+    
+    self.connectionStatus = kSCBUserStreamClientConnectionStatusDisconnected;
+    if ([self.delegate respondsToSelector:@selector(userStreamClientDidDisconnected:)]) {
+        [self.delegate userStreamClientDidDisconnected:self];
+    }
+}
+
 - (void)connectUserStreamAPI
 {
     if (_readStreamRef) {

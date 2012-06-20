@@ -39,11 +39,14 @@
 @synthesize username = _username;
 @synthesize preferencesWindowController = _preferencesWindowController;
 @synthesize userStreamClient = _userStreamClient;
+@synthesize streamAPIStatusButton = _streamAPIStatusButton;
 
 - (void)prepare
 {
     self.mainWebView.resourceLoadDelegate = self;
     self.mainWebView.UIDelegate = self;
+    
+    self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusNone];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
@@ -144,6 +147,11 @@
     [NSMenu popUpContextMenu:self.toolButtonActionMenu withEvent:[[NSApplication sharedApplication] currentEvent] forView:nil];
 }
 
+- (IBAction)didPushedStreamAPIStatusButton:(id)sender
+{
+    
+}
+
 - (IBAction)didSelectPreferencesItem:(id)sender
 {
     [self showPreferences];
@@ -185,9 +193,24 @@
     }
 }
 
+- (void)userStreamClientWillConnect:(SCBUserStreamClient *)client
+{
+    self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusPartiallyAvailable];
+}
+
+- (void)userStreamClientDidConnected:(SCBUserStreamClient *)client
+{
+    self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusAvailable];
+}
+
 - (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client
 {
-    [client start];
+    self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusUnavailable];
+}
+
+- (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error
+{
+    self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusUnavailable];
 }
 
 #pragma mark -

@@ -190,9 +190,19 @@
 							<object class="WebPreferences" key="Preferences">
 								<string key="Identifier"/>
 								<dictionary class="NSMutableDictionary" key="Values">
+									<boolean value="YES" key="WebKitAllowAnimatedImageLoopingPreferenceKey"/>
+									<boolean value="YES" key="WebKitAllowAnimatedImagesPreferenceKey"/>
+									<integer value="0" key="WebKitCacheModelPreferenceKey"/>
 									<integer value="12" key="WebKitDefaultFixedFontSize"/>
 									<integer value="12" key="WebKitDefaultFontSize"/>
+									<boolean value="YES" key="WebKitDisplayImagesKey"/>
+									<boolean value="NO" key="WebKitJavaEnabled"/>
+									<boolean value="YES" key="WebKitJavaScriptCanOpenWindowsAutomatically"/>
+									<boolean value="YES" key="WebKitJavaScriptEnabled"/>
 									<integer value="1" key="WebKitMinimumFontSize"/>
+									<boolean value="NO" key="WebKitPluginsEnabled"/>
+									<boolean value="YES" key="WebKitUserStyleSheetEnabledPreferenceKey"/>
+									<string key="WebKitUserStyleSheetLocationPreferenceKey">/System/Library/PrivateFrameworks/Lookup.framework/Resources/LUWebKitModuleStyle.css</string>
 								</dictionary>
 							</object>
 							<bool key="UseBackForwardList">NO</bool>
@@ -236,7 +246,6 @@
 							<string key="NSFrame">{{47, 7}, {25, 27}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="373978014">
@@ -251,6 +260,37 @@
 								<object class="NSCustomResource" key="NSNormalImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSActionTemplate</string>
+								</object>
+								<string key="NSAlternateContents"/>
+								<string key="NSKeyEquivalent"/>
+								<int key="NSPeriodicDelay">400</int>
+								<int key="NSPeriodicInterval">75</int>
+							</object>
+						</object>
+						<object class="NSButton" id="14738644">
+							<reference key="NSNextResponder" ref="439893737"/>
+							<int key="NSvFlags">33</int>
+							<string key="NSFrame">{{766, 13}, {16, 16}}</string>
+							<reference key="NSSuperview" ref="439893737"/>
+							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="281246869"/>
+							<string key="NSReuseIdentifierKey">_NS:9</string>
+							<bool key="NSEnabled">YES</bool>
+							<object class="NSButtonCell" key="NSCell" id="624244949">
+								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags2">32768</int>
+								<string key="NSContents"/>
+								<reference key="NSSupport" ref="870483427"/>
+								<string key="NSCellIdentifier">_NS:9</string>
+								<reference key="NSControlView" ref="14738644"/>
+								<int key="NSButtonFlags">1211912703</int>
+								<int key="NSButtonFlags2">2</int>
+								<object class="NSCustomResource" key="NSNormalImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSSwitch</string>
+								</object>
+								<object class="NSButtonImageSource" key="NSAlternateImage">
+									<string key="NSImageName">NSSwitch</string>
 								</object>
 								<string key="NSAlternateContents"/>
 								<string key="NSKeyEquivalent"/>
@@ -459,6 +499,22 @@
 					</object>
 					<int key="connectionID">817</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">streamAPIStatusButton</string>
+						<reference key="source" ref="1000424966"/>
+						<reference key="destination" ref="14738644"/>
+					</object>
+					<int key="connectionID">824</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">didPushedStreamAPIStatusButton:</string>
+						<reference key="source" ref="1000424966"/>
+						<reference key="destination" ref="14738644"/>
+					</object>
+					<int key="connectionID">825</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -501,6 +557,7 @@
 							<reference ref="1032006333"/>
 							<reference ref="281246869"/>
 							<reference ref="818635950"/>
+							<reference ref="14738644"/>
 						</array>
 						<reference key="parent" ref="972006081"/>
 					</object>
@@ -653,6 +710,19 @@
 						<reference key="object" ref="530962686"/>
 						<reference key="parent" ref="1033017550"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">822</int>
+						<reference key="object" ref="14738644"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="624244949"/>
+						</array>
+						<reference key="parent" ref="439893737"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">823</int>
+						<reference key="object" ref="624244949"/>
+						<reference key="parent" ref="14738644"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -689,12 +759,14 @@
 				<string key="814.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="816.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="818.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="822.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="823.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">819</int>
+			<int key="maxID">825</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -742,6 +814,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="didPushedActionButton:">id</string>
 						<string key="didPushedRefreshButton:">id</string>
+						<string key="didPushedStreamAPIStatusButton:">id</string>
 						<string key="didSelectPreferencesItem:">id</string>
 						<string key="didSelectQuitItem:">id</string>
 					</dictionary>
@@ -752,6 +825,10 @@
 						</object>
 						<object class="IBActionInfo" key="didPushedRefreshButton:">
 							<string key="name">didPushedRefreshButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didPushedStreamAPIStatusButton:">
+							<string key="name">didPushedStreamAPIStatusButton:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didSelectPreferencesItem:">
@@ -765,12 +842,17 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="mainWebView">WebView</string>
+						<string key="streamAPIStatusButton">NSButton</string>
 						<string key="toolButtonActionMenu">NSMenu</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="mainWebView">
 							<string key="name">mainWebView</string>
 							<string key="candidateClassName">WebView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="streamAPIStatusButton">
+							<string key="name">streamAPIStatusButton</string>
+							<string key="candidateClassName">NSButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="toolButtonActionMenu">
 							<string key="name">toolButtonActionMenu</string>
@@ -797,6 +879,7 @@
 			<string key="NSMenuCheckmark">{11, 11}</string>
 			<string key="NSMenuMixedState">{10, 3}</string>
 			<string key="NSRefreshTemplate">{10, 12}</string>
+			<string key="NSSwitch">{15, 15}</string>
 		</dictionary>
 	</data>
 </archive>
