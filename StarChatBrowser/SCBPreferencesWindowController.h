@@ -12,8 +12,12 @@
 
 - (IBAction)didPressedLoadButton:(id)sender;
 - (IBAction)didPressedLoadingAtStartupCheckButton:(id)sender;
+- (IBAction)didSelectToolbarItem:(id)sender;
 
 @property (assign) IBOutlet NSTextField *serverURLTextField;
 @property (assign) IBOutlet NSButton *loadingAtStartupCheckButton;
+@property (assign) IBOutlet NSTabView *tabView;
+@property (assign) IBOutlet NSToolbar *toolbar;
+@property (assign) IBOutlet NSTextField *versionLabel;
 
 @end

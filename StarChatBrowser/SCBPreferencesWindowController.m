@@ -11,6 +11,11 @@
 #import "SCBMainWindowController.h"
 #import "SCBConstants.h"
 
+enum TabViewItemIndexes {
+    TabViewItemIndexGeneral = 0,
+    TabViewItemIndexAbout,
+};
+
 @interface SCBPreferencesWindowController ()
 
 @end
@@ -19,6 +24,9 @@
 
 @synthesize serverURLTextField = _serverURLTextField;
 @synthesize loadingAtStartupCheckButton = _loadingAtStartupCheckButton;
+@synthesize tabView = _tabView;
+@synthesize toolbar = _toolbar;
+@synthesize versionLabel = _versionLabel;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -35,6 +43,13 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    
+    self.toolbar.selectedItemIdentifier = @"General";
+    
+    NSDictionary *bundleInfoDictionary = [[NSBundle mainBundle] infoDictionary];
+    self.versionLabel.stringValue = [NSString stringWithFormat:@"%@ (%@)",
+                                     [bundleInfoDictionary objectForKey:@"CFBundleShortVersionString"],
+                                     [bundleInfoDictionary objectForKey:@"CFBundleVersion"]];
     
     NSString *serverURLString = [[NSUserDefaults standardUserDefaults] objectForKey:kUserSettingsStarChatServerURL];
     BOOL enableLoadingAtStartup = [[[NSUserDefaults standardUserDefaults] objectForKey:kUserSettingsEnableLoadingAtStartup] boolValue];
@@ -68,6 +83,18 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:isOn forKey:kUserSettingsEnableLoadingAtStartup];
     [userDefaults synchronize];
+}
+
+- (void)didSelectToolbarItem:(id)sender
+{
+    NSString *identifier = [sender itemIdentifier];
+    
+    if ([identifier isEqualToString:@"General"]) {
+        [self.tabView selectTabViewItemAtIndex:TabViewItemIndexGeneral];
+    }
+    else if ([identifier isEqualToString:@"About"]) {
+        [self.tabView selectTabViewItemAtIndex:TabViewItemIndexAbout];
+    }
 }
 
 @end
