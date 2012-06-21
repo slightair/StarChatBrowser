@@ -43,9 +43,6 @@
 
 - (void)prepare
 {
-    self.mainWebView.resourceLoadDelegate = self;
-    self.mainWebView.UIDelegate = self;
-    
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusNone];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -271,6 +268,16 @@
     
     NSAlert *alert = [NSAlert alertWithMessageText:host defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:message];
     [alert runModal];
+}
+
+#pragma mark -
+#pragma mark WebPolicyDelegate Methods
+
+- (void)webView:(WebView *)webView decidePolicyForNewWindowAction:(NSDictionary *)actionInformation request:(NSURLRequest *)request newFrameName:(NSString *)frameName decisionListener:(id<WebPolicyDecisionListener>)listener
+{
+    [listener ignore];
+    
+    [[NSWorkspace sharedWorkspace] openURL:request.URL];
 }
 
 @end
