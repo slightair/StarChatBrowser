@@ -9,7 +9,7 @@
 #import "SCBUserStreamClient.h"
 
 #define kClientBufferSize 2048
-#define kReconnectInterval 600
+#define kReconnectThreshold 90
 
 // CFNetwork CFReadStreamClientCallBack
 void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType, void *clientCallBackInfo);
@@ -18,12 +18,15 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)releaseReadStream;
 - (void)connectUserStreamAPI;
+- (void)stopKeepConnectionTimer;
+- (void)checkPacketInterval;
 
 @property (strong) NSString *username;
 @property (strong) SBJsonStreamParserAdapter *streamParserAdapter;
 @property (strong) SBJsonStreamParser *streamParser;
 @property          SCBUserStreamClientConnectionStatus connectionStatus;
-@property (strong) NSTimer *reconnectTimer;
+@property (strong) NSTimer *keepConnectionTimer;
+@property          time_t lastPacketReceivedAt;
 
 // AFHTTPClient
 @property (readwrite, nonatomic, retain) NSMutableDictionary *defaultHeaders;
@@ -40,8 +43,9 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize streamParser = _streamParser;
 @synthesize delegate = _delegate;
 @synthesize connectionStatus = _connectionStatus;
-@synthesize reconnectTimer = _reconnectTimer;
+@synthesize keepConnectionTimer = _keepConnectionTimer;
 @synthesize lastReceivedMessageId = _lastReceivedMessageId;
+@synthesize lastPacketReceivedAt = _lastPacketReceivedAt;
 
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
@@ -68,23 +72,19 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)start
 {
-    if ([self.reconnectTimer isValid]) {
-        [self.reconnectTimer invalidate];
-    }
+    [self stopKeepConnectionTimer];
     
     [self connectUserStreamAPI];
-    self.reconnectTimer = [NSTimer scheduledTimerWithTimeInterval:kReconnectInterval
+    self.keepConnectionTimer = [NSTimer scheduledTimerWithTimeInterval:1
                                                               target:self
-                                                            selector:@selector(connectUserStreamAPI)
+                                                            selector:@selector(checkPacketInterval)
                                                             userInfo:nil
                                                              repeats:YES];
 }
 
 - (void)stop
 {
-    if ([self.reconnectTimer isValid]) {
-        [self.reconnectTimer invalidate];
-    }
+    [self stopKeepConnectionTimer];
     
     if (_readStreamRef) {
         CFReadStreamUnscheduleFromRunLoop(_readStreamRef, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
@@ -143,6 +143,15 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     CFRelease(urlRef);
 }
 
+- (void)checkPacketInterval
+{
+    time_t now = time(NULL);
+    
+    if (now > (self.lastPacketReceivedAt + kReconnectThreshold)) {
+        [self connectUserStreamAPI];
+    }
+}
+
 - (void)releaseReadStream
 {
     if (_readStreamRef) {
@@ -151,11 +160,16 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     _readStreamRef = NULL;
 }
 
+- (void)stopKeepConnectionTimer
+{
+    if ([self.keepConnectionTimer isValid]) {
+        [self.keepConnectionTimer invalidate];
+    }
+}
+
 - (void)dealloc
 {
-    if ([self.reconnectTimer isValid]) {
-        [self.reconnectTimer invalidate];
-    }
+    [self stopKeepConnectionTimer];
     
     if (_readStreamRef) {
         CFRelease(_readStreamRef);
@@ -194,7 +208,9 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     switch (eventType) {
         case kCFStreamEventOpenCompleted:
         {
+            client.lastPacketReceivedAt = time(NULL);
             client.connectionStatus = kSCBUserStreamClientConnectionStatusConnected;
+            
             if ([client.delegate respondsToSelector:@selector(userStreamClientDidConnected:)]) {
                 [client.delegate userStreamClientDidConnected:client];
             }
@@ -207,6 +223,8 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
             CFIndex bytesRead = CFReadStreamRead(stream, buffer, sizeof(buffer));
             
             if (bytesRead > 0) {
+                client.lastPacketReceivedAt = time(NULL);
+                
                 NSData *data = [NSData dataWithBytes:buffer length:bytesRead];
                 [client.streamParser parse:data];
             }
@@ -223,6 +241,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
             CFReadStreamUnscheduleFromRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
             CFReadStreamClose(stream);
             [client releaseReadStream];
+            [client stopKeepConnectionTimer];
             
             break;
         }
@@ -243,6 +262,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
             CFReadStreamUnscheduleFromRunLoop(stream, CFRunLoopGetCurrent(), kCFRunLoopCommonModes);
             CFReadStreamClose(stream);
             [client releaseReadStream];
+            [client stopKeepConnectionTimer];
             
             break;
         }
