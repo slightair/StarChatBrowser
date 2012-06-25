@@ -9,25 +9,22 @@
 #import "SCBMainWindowController.h"
 #import "SCBMainWindow.h"
 #import "SCBConstants.h"
-#import "SCBGrowlClient.h"
 #import "SCBPreferencesWindowController.h"
+#import "SCBStarChatContext.h"
+#import "SCBGrowlClient.h"
 #import "NSData+Base64.h"
-#import "CLVStarChatAPIClient.h"
 
 @interface SCBMainWindowController ()
 
 - (void)refreshMainWebView;
 - (void)moveChannel:(NSString *)channel;
-- (void)prepareAPIClient:(NSString *)userName password:(NSString *)password;
 - (void)didClickedGrowlNewMessageNotification:(NSNotification *)notification;
 
 @property (strong) NSString *mainPageURLString;
 @property (strong) NSString *authInfo;
 @property (strong) id authRequestResourceIdentifier;
-@property (strong) NSString *userName;
 @property (strong) SCBPreferencesWindowController *preferencesWindowController;
-@property (strong) CLVStarChatAPIClient *apiClient;
-@property (strong) SCBUserStreamClient *userStreamClient;
+@property (strong) SCBStarChatContext *starChatContext;
 
 @end
 
@@ -38,14 +35,13 @@
 @synthesize mainPageURLString = _mainPageURLString;
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
-@synthesize userName = _userName;
 @synthesize preferencesWindowController = _preferencesWindowController;
-@synthesize apiClient = _apiClient;
-@synthesize userStreamClient = _userStreamClient;
 @synthesize streamAPIStatusButton = _streamAPIStatusButton;
+@synthesize starChatContext = _starChatContext;
 
 - (void)prepare
 {
+    self.starChatContext = [[SCBStarChatContext alloc] init];
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusNone];
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -93,6 +89,9 @@
 
 - (void)loadMainPage:(NSString *)urlString
 {
+    self.starChatContext.baseURL = [NSURL URLWithString:urlString];
+    self.starChatContext.userStreamClient.delegate = self;
+    
     self.mainPageURLString = urlString;
     [self.mainWebView setMainFrameURL:urlString];
 }
@@ -119,35 +118,6 @@
     
     [self.window addChildWindow:self.preferencesWindowController.window ordered:NSWindowAbove];
     [self.preferencesWindowController showWindow:self];
-}
-
-- (void)prepareAPIClient:(NSString *)userName password:(NSString *)password
-{
-    NSURL *baseURL = [NSURL URLWithString:self.mainPageURLString];
-    
-    if (!self.apiClient) {
-        self.apiClient = [[CLVStarChatAPIClient alloc] initWithBaseURL:baseURL];
-        [self.apiClient setAuthorizationHeaderWithUsername:userName password:password];
-    }
-    else if (![self.apiClient.userName isEqualToString:userName]) {
-        [self.apiClient setAuthorizationHeaderWithUsername:userName password:password];
-    }
-    
-    if (!self.userStreamClient) {
-        self.userStreamClient = [[SCBUserStreamClient alloc] initWithBaseURL:baseURL];
-        self.userStreamClient.delegate = self;
-        [self.userStreamClient setAuthorizationHeaderWithUsername:userName password:password];
-    }
-    else if (![self.userStreamClient.userName isEqualToString:userName]) {
-        [self.userStreamClient stop];
-        [self.userStreamClient setAuthorizationHeaderWithUsername:userName password:password];
-    }
-    
-    if (self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusNone ||
-        self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusDisconnected ||
-        self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusFailed) {
-        [self.userStreamClient start];
-    }
 }
 
 - (IBAction)didPushedRefreshButton:(id)sender
@@ -190,20 +160,9 @@
 #pragma mark -
 #pragma mark SCBUserStreamClientDelegate Methods
 
-- (void)userStreamClient:(SCBUserStreamClient *)client didReceivedUserInfo:(NSDictionary *)userInfo
+- (void)userStreamClient:(SCBUserStreamClient *)client didReceivedPacket:(NSDictionary *)packet
 {
-    if ([[userInfo objectForKey:@"type"] isEqualToString:@"message"]) {
-        NSDictionary *message = [userInfo objectForKey:@"message"];
-        
-        if ([[message objectForKey:@"user_name"] isEqualToString:self.userName]) {
-            return;
-        }
-        
-        NSString *title = [message objectForKey:@"channel_name"];
-        NSString *description = [NSString stringWithFormat:@"%@: %@", [message objectForKey:@"user_name"], [message objectForKey:@"body"]];
-        
-        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description userInfo:userInfo];
-    }
+    [self.starChatContext receivedPacket:packet];
 }
 
 - (void)userStreamClientWillConnect:(SCBUserStreamClient *)client
@@ -251,8 +210,8 @@
         NSString *userName = [authInfoParams objectAtIndex:0];
         NSString *password = [authInfoParams objectAtIndex:1];
         
-        self.userName = userName;
-        [self prepareAPIClient:userName password:password];
+        [self.starChatContext setUserName:userName andPassword:password];
+        [self.starChatContext.userStreamClient start];
         
         self.authInfo = nil;
         self.authRequestResourceIdentifier = nil;

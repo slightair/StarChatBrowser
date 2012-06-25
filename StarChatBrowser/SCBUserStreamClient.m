@@ -77,6 +77,11 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)start
 {
+    if (self.connectionStatus == kSCBUserStreamClientConnectionStatusConnecting ||
+        self.connectionStatus == kSCBUserStreamClientConnectionStatusConnected) {
+        return;
+    }
+    
     [self stopKeepConnectionTimer];
     
     [self connectUserStreamAPI];
@@ -195,8 +200,8 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         }
     }
     
-    if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedUserInfo:)]) {
-        [self.delegate userStreamClient:self didReceivedUserInfo:dict];
+    if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedPacket:)]) {
+        [self.delegate userStreamClient:self didReceivedPacket:dict];
     }
 }
 

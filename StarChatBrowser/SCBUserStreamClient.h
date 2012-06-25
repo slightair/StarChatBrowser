@@ -21,7 +21,7 @@ typedef enum {
 @class SCBUserStreamClient;
 
 @protocol SCBUserStreamClientDelegate <NSObject>
-- (void)userStreamClient:(SCBUserStreamClient *)client didReceivedUserInfo:(NSDictionary *)userInfo;
+- (void)userStreamClient:(SCBUserStreamClient *)client didReceivedPacket:(NSDictionary *)packet;
 @optional
 - (void)userStreamClientWillConnect:(SCBUserStreamClient *)client;
 - (void)userStreamClientDidConnected:(SCBUserStreamClient *)client;

@@ -24,7 +24,6 @@
 - (IBAction)didSelectPreferencesItem:(id)sender;
 - (IBAction)didSelectQuitItem:(id)sender;
 
-
 @property (assign) IBOutlet WebView *mainWebView;
 @property (assign) IBOutlet NSMenu *toolButtonActionMenu;
 @property (assign) IBOutlet NSButton *streamAPIStatusButton;
