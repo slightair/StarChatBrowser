@@ -21,7 +21,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 - (void)stopKeepConnectionTimer;
 - (void)checkPacketInterval;
 
-@property (strong) NSString *username;
+@property (strong, readwrite) NSString *userName;
 @property (strong) SBJsonStreamParserAdapter *streamParserAdapter;
 @property (strong) SBJsonStreamParser *streamParser;
 @property          SCBUserStreamClientConnectionStatus connectionStatus;
@@ -38,7 +38,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
     CFReadStreamRef _readStreamRef;
 }
 
-@synthesize username = _username;
+@synthesize userName = _userName;
 @synthesize streamParserAdapter = _streamParserAdapter;
 @synthesize streamParser = _streamParser;
 @synthesize delegate = _delegate;
@@ -50,7 +50,13 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
 
-- (id)initWithBaseURL:(NSURL *)url username:(NSString *)username
+- (void)setAuthorizationHeaderWithUsername:(NSString *)username password:(NSString *)password
+{
+    self.userName = username;
+    [super setAuthorizationHeaderWithUsername:username password:password];
+}
+
+- (id)initWithBaseURL:(NSURL *)url
 {
     self = [super initWithBaseURL:url];
     if (self) {
@@ -61,7 +67,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         parser.delegate = adapter;
         parser.supportMultipleDocuments = YES;
         
-        self.username = username;
         self.streamParserAdapter = adapter;
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
@@ -116,7 +121,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         query = [NSString stringWithFormat:@"?start_message_id=%ld", self.lastReceivedMessageId + 1];
     }
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream%@", self.username, query] relativeToURL:self.baseURL];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream%@", self.userName, query] relativeToURL:self.baseURL];
     CFURLRef urlRef = CFURLCreateWithString(kCFAllocatorDefault, (__bridge CFStringRef)[url absoluteString], NULL);
     
     CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("GET"), urlRef, kCFHTTPVersion1_1);

@@ -12,19 +12,21 @@
 #import "SCBGrowlClient.h"
 #import "SCBPreferencesWindowController.h"
 #import "NSData+Base64.h"
+#import "CLVStarChatAPIClient.h"
 
 @interface SCBMainWindowController ()
 
 - (void)refreshMainWebView;
 - (void)moveChannel:(NSString *)channel;
-- (void)startUserStreamClient:(NSString *)username password:(NSString *)password;
+- (void)prepareAPIClient:(NSString *)userName password:(NSString *)password;
 - (void)didClickedGrowlNewMessageNotification:(NSNotification *)notification;
 
 @property (strong) NSString *mainPageURLString;
 @property (strong) NSString *authInfo;
 @property (strong) id authRequestResourceIdentifier;
-@property (strong) NSString *username;
+@property (strong) NSString *userName;
 @property (strong) SCBPreferencesWindowController *preferencesWindowController;
+@property (strong) CLVStarChatAPIClient *apiClient;
 @property (strong) SCBUserStreamClient *userStreamClient;
 
 @end
@@ -36,8 +38,9 @@
 @synthesize mainPageURLString = _mainPageURLString;
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
-@synthesize username = _username;
+@synthesize userName = _userName;
 @synthesize preferencesWindowController = _preferencesWindowController;
+@synthesize apiClient = _apiClient;
 @synthesize userStreamClient = _userStreamClient;
 @synthesize streamAPIStatusButton = _streamAPIStatusButton;
 
@@ -118,15 +121,28 @@
     [self.preferencesWindowController showWindow:self];
 }
 
-- (void)startUserStreamClient:(NSString *)username password:(NSString *)password
+- (void)prepareAPIClient:(NSString *)userName password:(NSString *)password
 {
     NSURL *baseURL = [NSURL URLWithString:self.mainPageURLString];
-    if (!self.userStreamClient) {
-        self.userStreamClient = [[SCBUserStreamClient alloc] initWithBaseURL:baseURL username:username];
-        self.userStreamClient.delegate = self;
-        [self.userStreamClient setAuthorizationHeaderWithUsername:username password:password];
+    
+    if (!self.apiClient) {
+        self.apiClient = [[CLVStarChatAPIClient alloc] initWithBaseURL:baseURL];
+        [self.apiClient setAuthorizationHeaderWithUsername:userName password:password];
     }
-
+    else if (![self.apiClient.userName isEqualToString:userName]) {
+        [self.apiClient setAuthorizationHeaderWithUsername:userName password:password];
+    }
+    
+    if (!self.userStreamClient) {
+        self.userStreamClient = [[SCBUserStreamClient alloc] initWithBaseURL:baseURL];
+        self.userStreamClient.delegate = self;
+        [self.userStreamClient setAuthorizationHeaderWithUsername:userName password:password];
+    }
+    else if (![self.userStreamClient.userName isEqualToString:userName]) {
+        [self.userStreamClient stop];
+        [self.userStreamClient setAuthorizationHeaderWithUsername:userName password:password];
+    }
+    
     if (self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusNone ||
         self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusDisconnected ||
         self.userStreamClient.connectionStatus == kSCBUserStreamClientConnectionStatusFailed) {
@@ -179,7 +195,7 @@
     if ([[userInfo objectForKey:@"type"] isEqualToString:@"message"]) {
         NSDictionary *message = [userInfo objectForKey:@"message"];
         
-        if ([[message objectForKey:@"user_name"] isEqualToString:self.username]) {
+        if ([[message objectForKey:@"user_name"] isEqualToString:self.userName]) {
             return;
         }
         
@@ -232,11 +248,11 @@
 {
     if ([identifier isEqual:self.authRequestResourceIdentifier] && ((NSHTTPURLResponse *)response).statusCode == 200) {
         NSArray *authInfoParams = [self.authInfo componentsSeparatedByString:@":"];
-        NSString *username = [authInfoParams objectAtIndex:0];
+        NSString *userName = [authInfoParams objectAtIndex:0];
         NSString *password = [authInfoParams objectAtIndex:1];
         
-        self.username = username;
-        [self startUserStreamClient:username password:password];
+        self.userName = userName;
+        [self prepareAPIClient:userName password:password];
         
         self.authInfo = nil;
         self.authRequestResourceIdentifier = nil;

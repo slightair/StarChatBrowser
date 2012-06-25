@@ -31,11 +31,11 @@ typedef enum {
 
 @interface SCBUserStreamClient : AFHTTPClient <SBJsonStreamParserAdapterDelegate>
 
-- (id)initWithBaseURL:(NSURL *)url username:(NSString *)username;
 - (void)start;
 - (void)stop;
 
 @property (assign)   id <SCBUserStreamClientDelegate> delegate;
+@property (strong, readonly) NSString *userName;
 @property (readonly) SCBUserStreamClientConnectionStatus connectionStatus;
 @property            NSInteger lastReceivedMessageId;
 
