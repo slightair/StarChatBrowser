@@ -262,4 +262,45 @@
     [[NSWorkspace sharedWorkspace] openURL:request.URL];
 }
 
+#pragma mark -
+#pragma mark WebFrameLoadDelegate Methods
+
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
+{
+    if ([frame isEqualTo:sender.mainFrame]) {
+        [[sender windowScriptObject] setValue:self forKey:@"SCBMainWindowController"];
+        
+        NSString *hookLogOutEventScript = @"$('#logOutLink a').click(function(){window.SCBMainWindowController.didClickLogOut();return false;});";
+        [sender stringByEvaluatingJavaScriptFromString:hookLogOutEventScript];
+    }
+}
+
+#pragma mark -
+#pragma mark WebScripting Methods
+
++ (NSString *)webScriptNameForSelector:(SEL)aSelector
+{
+    NSString *name = nil;
+    if (aSelector == @selector(didClickLogOut)){
+        name = @"didClickLogOut";
+    }
+    return name;
+}
+
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)aSelector
+{
+    if (aSelector == @selector(didClickLogOut)){
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark -
+#pragma mark JavaScript bridge Methods
+
+- (void)didClickLogOut
+{
+    [self.starChatContext setUserName:nil andPassword:nil];
+}
+
 @end
