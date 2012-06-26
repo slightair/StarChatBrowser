@@ -20,6 +20,7 @@
 		57015BFA1579EAC90033E4C1 /* SCBUserStreamClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 57015BF91579EAC90033E4C1 /* SCBUserStreamClient.m */; };
 		571E199C157A12DB005C59CC /* SCBGrowlClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 571E199B157A12DB005C59CC /* SCBGrowlClient.m */; };
 		579E3F5915980DA5002060B4 /* SCBStarChatContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 579E3F5815980DA5002060B4 /* SCBStarChatContext.m */; };
+		579E3F5C159A2A25002060B4 /* StarChatBrowser.icns in Resources */ = {isa = PBXBuildFile; fileRef = 579E3F5B159A2A25002060B4 /* StarChatBrowser.icns */; };
 		57B8F8B3157FC96C008BE56A /* SCBPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57B8F8B1157FC96C008BE56A /* SCBPreferencesWindowController.m */; };
 		57B8F8B4157FC96C008BE56A /* SCBPreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */; };
 		57C43BDF157A428400518358 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C43BDE157A428400518358 /* Growl.framework */; };
@@ -69,6 +70,7 @@
 		5765037F157FBE66009282DE /* SCBConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBConstants.h; sourceTree = "<group>"; };
 		579E3F5715980DA5002060B4 /* SCBStarChatContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBStarChatContext.h; sourceTree = "<group>"; };
 		579E3F5815980DA5002060B4 /* SCBStarChatContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBStarChatContext.m; sourceTree = "<group>"; };
+		579E3F5B159A2A25002060B4 /* StarChatBrowser.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = StarChatBrowser.icns; path = ../../../../Dropbox/StarChatBrowser.icns; sourceTree = "<group>"; };
 		57B8F8B0157FC96C008BE56A /* SCBPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCBPreferencesWindowController.h; sourceTree = "<group>"; };
 		57B8F8B1157FC96C008BE56A /* SCBPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCBPreferencesWindowController.m; sourceTree = "<group>"; };
 		57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCBPreferencesWindowController.xib; sourceTree = "<group>"; };
@@ -141,7 +143,6 @@
 			children = (
 				570001AF1579278E008429C9 /* SCBAppDelegate.h */,
 				570001B01579278E008429C9 /* SCBAppDelegate.m */,
-				570001B21579278E008429C9 /* MainMenu.xib */,
 				570001BA15792810008429C9 /* SCBMainWindowController.h */,
 				570001BB15792810008429C9 /* SCBMainWindowController.m */,
 				570001BF1579D48F008429C9 /* SCBMainWindow.h */,
@@ -150,13 +151,15 @@
 				57015BF91579EAC90033E4C1 /* SCBUserStreamClient.m */,
 				571E199A157A12DB005C59CC /* SCBGrowlClient.h */,
 				571E199B157A12DB005C59CC /* SCBGrowlClient.m */,
-				570001A41579278E008429C9 /* Supporting Files */,
 				5765037F157FBE66009282DE /* SCBConstants.h */,
 				57B8F8B0157FC96C008BE56A /* SCBPreferencesWindowController.h */,
 				57B8F8B1157FC96C008BE56A /* SCBPreferencesWindowController.m */,
-				57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */,
 				579E3F5715980DA5002060B4 /* SCBStarChatContext.h */,
 				579E3F5815980DA5002060B4 /* SCBStarChatContext.m */,
+				570001B21579278E008429C9 /* MainMenu.xib */,
+				57B8F8B2157FC96C008BE56A /* SCBPreferencesWindowController.xib */,
+				570001A41579278E008429C9 /* Supporting Files */,
+				579E3F5B159A2A25002060B4 /* StarChatBrowser.icns */,
 			);
 			path = StarChatBrowser;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				570001AE1579278E008429C9 /* Credits.rtf in Resources */,
 				570001B41579278E008429C9 /* MainMenu.xib in Resources */,
 				57B8F8B4157FC96C008BE56A /* SCBPreferencesWindowController.xib in Resources */,
+				579E3F5C159A2A25002060B4 /* StarChatBrowser.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
