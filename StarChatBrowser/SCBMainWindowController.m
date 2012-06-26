@@ -48,7 +48,23 @@
     [notificationCenter addObserver:self
                            selector:@selector(didClickedGrowlNewMessageNotification:)
                                name:kSCBNotificationClickedGrowlNewMessageNotification
-                             object:[SCBGrowlClient sharedClient]];
+                             object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(userStreamClientWillConnect:)
+                               name:kSCBNotificationUserStreamClientWillConnect
+                             object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(userStreamClientDidConnected:)
+                               name:kSCBNotificationUserStreamClientDidConnected
+                             object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(userStreamClientDidDisconnected:)
+                               name:kSCBNotificationUserStreamClientDidDisconnected
+                             object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(userStreamClientDidFail:)
+                               name:kSCBNotificationUserStreamClientDidFail
+                             object:nil];
 }
 
 - (void)showWindow
@@ -90,7 +106,6 @@
 - (void)loadMainPage:(NSString *)urlString
 {
     self.starChatContext.baseURL = [NSURL URLWithString:urlString];
-    self.starChatContext.userStreamClient.delegate = self;
     
     self.mainPageURLString = urlString;
     [self.mainWebView setMainFrameURL:urlString];
@@ -157,30 +172,22 @@
     [self showWindow];
 }
 
-#pragma mark -
-#pragma mark SCBUserStreamClientDelegate Methods
-
-- (void)userStreamClient:(SCBUserStreamClient *)client didReceivedPacket:(NSDictionary *)packet
-{
-    [self.starChatContext receivedPacket:packet];
-}
-
-- (void)userStreamClientWillConnect:(SCBUserStreamClient *)client
+- (void)userStreamClientWillConnect:(NSNotification *)notification
 {
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusPartiallyAvailable];
 }
 
-- (void)userStreamClientDidConnected:(SCBUserStreamClient *)client
+- (void)userStreamClientDidConnected:(NSNotification *)notification
 {
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusAvailable];
 }
 
-- (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client
+- (void)userStreamClientDidDisconnected:(NSNotification *)notification
 {
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusUnavailable];
 }
 
-- (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error
+- (void)userStreamClientDidFail:(NSNotification *)notification
 {
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusUnavailable];
 }
@@ -211,7 +218,7 @@
         NSString *password = [authInfoParams objectAtIndex:1];
         
         [self.starChatContext setUserName:userName andPassword:password];
-        [self.starChatContext.userStreamClient start];
+        [self.starChatContext startUserStreamClient];
         
         self.authInfo = nil;
         self.authRequestResourceIdentifier = nil;

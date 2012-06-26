@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "SCBUserStreamClient.h"
 
-@interface SCBStarChatContext : NSObject
+@interface SCBStarChatContext : NSObject <SCBUserStreamClientDelegate>
 
-- (void)receivedPacket:(NSDictionary *)packet;
 - (void)setUserName:(NSString *)userName andPassword:(NSString *)password;
+- (void)startUserStreamClient;
+- (void)stopUserStreamClient;
 
 @property (nonatomic, strong) NSURL *baseURL;
 @property (strong, readonly) NSString *userName;
-@property (strong, readonly) SCBUserStreamClient *userStreamClient;
 
 @end

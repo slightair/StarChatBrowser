@@ -12,3 +12,7 @@
 
 // Notification Center
 #define kSCBNotificationClickedGrowlNewMessageNotification @"ClickedGrowlNewMessageNotification"
+#define kSCBNotificationUserStreamClientWillConnect @"UserStreamClientWillConnect"
+#define kSCBNotificationUserStreamClientDidConnected @"UserStreamClientDidConnected"
+#define kSCBNotificationUserStreamClientDidDisconnected @"UserStreamClientDidDisconnected"
+#define kSCBNotificationUserStreamClientDidFail @"UserStreamClientDidFail"

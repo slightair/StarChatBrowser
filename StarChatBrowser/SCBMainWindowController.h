@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 #import "SCBUserStreamClient.h"
 
-@interface SCBMainWindowController : NSWindowController <SCBUserStreamClientDelegate>
+@interface SCBMainWindowController : NSWindowController
 
 - (void)prepare;
 - (void)showWindow;
