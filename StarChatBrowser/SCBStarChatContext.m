@@ -13,9 +13,14 @@
 
 @interface SCBStarChatContext ()
 
+- (void)reloadInfo;
+
 @property (strong) NSString *userName;
 @property (strong) CLVStarChatAPIClient *apiClient;
 @property (strong, readwrite) SCBUserStreamClient *userStreamClient;
+@property (strong) NSMutableArray *subscribedChannels;
+@property (strong) NSMutableDictionary *nickDictionary;
+@property (strong) NSMutableArray *keywords;
 
 @end
 
@@ -25,9 +30,16 @@
 @synthesize userName = _userName;
 @synthesize apiClient = _apiClient;
 @synthesize userStreamClient = _userStreamClient;
+@synthesize subscribedChannels = _subscribedChannels;
+@synthesize nickDictionary = _nickDictionary;
+@synthesize keywords = _keywords;
 
 - (void)setBaseURL:(NSURL *)baseURL
 {
+    self.subscribedChannels = [NSMutableArray array];
+    self.nickDictionary = [NSMutableDictionary dictionary];
+    self.keywords = [NSMutableArray array];
+    
     self.apiClient = [[CLVStarChatAPIClient alloc] initWithBaseURL:baseURL];
     
     [self.userStreamClient stop];
@@ -39,7 +51,7 @@
 {
     self.userName = userName;
     
-    if ([self.apiClient.userName isEqualToString:userName]) {
+    if (![self.apiClient.userName isEqualToString:userName]) {
         [self.apiClient setAuthorizationHeaderWithUsername:userName password:password];
     }
     
@@ -57,6 +69,52 @@
 - (void)stopUserStreamClient
 {
     [self.userStreamClient stop];
+}
+
+- (void)reloadInfo
+{
+    self.nickDictionary = [NSMutableDictionary dictionary];
+    self.keywords = nil;
+    
+    [self.apiClient subscribedChannels:^(NSArray *channels){
+        self.subscribedChannels = [NSMutableArray arrayWithArray:channels];
+        
+        dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_source_t source = dispatch_source_create(DISPATCH_SOURCE_TYPE_DATA_ADD, 0, 0, globalQueue);
+        
+        __block NSInteger complete = 0;
+        dispatch_source_set_event_handler(source, ^{
+            complete += dispatch_source_get_data(source);
+            if (complete == [channels count]) {
+                dispatch_source_cancel(source);
+            }
+        });
+        
+        dispatch_source_set_cancel_handler(source, ^{
+            dispatch_release(source);
+        });
+        
+        for (CLVStarChatChannelInfo *channel in channels) {
+            [self.apiClient usersForChannel:channel.name
+                                 completion:^(NSArray *users){
+                                     for (CLVStarChatUserInfo *user in users) {
+                                         if ([user.name isEqualToString:self.userName] && !self.keywords) {
+                                             self.keywords = [NSMutableArray arrayWithArray:user.keywords];
+                                         }
+                                         [self.nickDictionary setObject:user.nick forKey:user.name];
+                                     }
+                                     dispatch_source_merge_data(source, 1);
+                                 }
+                                    failure:^(NSError *error){
+                                        NSLog(@"%@", [error localizedDescription]);
+                                    }];
+        }
+        
+        dispatch_resume(source);
+    }
+                               failure:^(NSError *error){
+                                   NSLog(@"%@", [error localizedDescription]);
+                               }];
 }
 
 #pragma mark -
@@ -86,6 +144,8 @@
 
 - (void)userStreamClientDidConnected:(SCBUserStreamClient *)client
 {
+    [self reloadInfo];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kSCBNotificationUserStreamClientDidConnected
                                                         object:self];
 }
