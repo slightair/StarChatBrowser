@@ -123,16 +123,20 @@
 - (void)userStreamClient:(SCBUserStreamClient *)client didReceivedPacket:(NSDictionary *)packet
 {
     if ([[packet objectForKey:@"type"] isEqualToString:@"message"]) {
-        NSDictionary *message = [packet objectForKey:@"message"];
+        CLVStarChatMessageInfo *message = [CLVStarChatMessageInfo messageInfoWithDictionary:[packet objectForKey:@"message"]];
         
-        if ([[message objectForKey:@"user_name"] isEqualToString:self.userName]) {
+        if ([message.userName isEqualToString:self.userName]) {
             return;
         }
         
-        NSString *title = [message objectForKey:@"channel_name"];
-        NSString *description = [NSString stringWithFormat:@"%@: %@", [message objectForKey:@"user_name"], [message objectForKey:@"body"]];
+        NSString *nick = [self.nickDictionary objectForKey:message.userName];
+        if (message.temporaryNick) {
+            nick = message.temporaryNick;
+        }
         
-        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:title description:description userInfo:packet];
+        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
+                                                     description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
+                                                        userInfo:packet];
     }
 }
 
