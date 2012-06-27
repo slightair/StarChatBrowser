@@ -49,7 +49,12 @@
 
 - (void)setUserName:(NSString *)userName andPassword:(NSString *)password
 {
-    self.userName = userName;
+    if (![self.userName isEqualToString:userName]) {
+        self.userName = userName;
+        self.subscribedChannels = [NSMutableArray array];
+        self.nickDictionary = [NSMutableDictionary dictionary];
+        self.keywords = [NSMutableArray array];
+    }
     
     if (![self.apiClient.userName isEqualToString:userName]) {
         [self.apiClient setAuthorizationHeaderWithUsername:userName password:password];
