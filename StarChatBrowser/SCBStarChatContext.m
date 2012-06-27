@@ -101,7 +101,10 @@
                                          if ([user.name isEqualToString:self.userName] && !self.keywords) {
                                              self.keywords = [NSMutableArray arrayWithArray:user.keywords];
                                          }
-                                         [self.nickDictionary setObject:user.nick forKey:user.name];
+                                         
+                                         if (![self.nickDictionary objectForKey:user.name]) {
+                                             [self.nickDictionary setObject:user.nick forKey:user.name];
+                                         }
                                      }
                                      dispatch_source_merge_data(source, 1);
                                  }
@@ -122,7 +125,9 @@
 
 - (void)userStreamClient:(SCBUserStreamClient *)client didReceivedPacket:(NSDictionary *)packet
 {
-    if ([[packet objectForKey:@"type"] isEqualToString:@"message"]) {
+    NSString *packetType = [packet objectForKey:@"type"];
+    
+    if ([packetType isEqualToString:@"message"]) {
         CLVStarChatMessageInfo *message = [CLVStarChatMessageInfo messageInfoWithDictionary:[packet objectForKey:@"message"]];
         
         if ([message.userName isEqualToString:self.userName]) {
@@ -137,6 +142,75 @@
         [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
                                                      description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
                                                         userInfo:packet];
+    }
+    else if ([packetType isEqualToString:@"subscribing"]) {
+        NSString *channelName = [packet objectForKey:@"channel_name"];
+        NSString *userName = [packet objectForKey:@"user_name"];
+        
+        if ([userName isEqualToString:self.userName]) {
+            [self.apiClient usersForChannel:channelName
+                                 completion:^(NSArray *users){
+                                     for (CLVStarChatUserInfo *user in users) {
+                                         if (![self.nickDictionary objectForKey:user.name]) {
+                                             [self.nickDictionary setObject:user.nick forKey:user.name];
+                                         }
+                                     }
+                                 }
+                                    failure:^(NSError *error){
+                                        NSLog(@"%@", [error localizedDescription]);
+                                    }];
+            
+            [self.apiClient channelInfoForName:channelName
+                                    completion:^(CLVStarChatChannelInfo *channel){
+                                        [self.subscribedChannels addObject:channel];
+                                    }
+                                       failure:^(NSError *error){
+                                           NSLog(@"%@", [error localizedDescription]);
+                                       }];
+        }
+        else {
+            if (![self.nickDictionary objectForKey:userName]) {
+                [self.apiClient userInfoForName:userName
+                                     completion:^(CLVStarChatUserInfo *user){
+                                         [self.nickDictionary setObject:user.nick forKey:user.name];
+                                     }
+                                        failure:^(NSError *error){
+                                            NSLog(@"%@", [error localizedDescription]);
+                                        }];
+            }
+        }
+    }
+    else if ([packetType isEqualToString:@"delete_subscribing"]) {
+        NSString *channelName = [packet objectForKey:@"channel_name"];
+        NSString *userName = [packet objectForKey:@"user_name"];
+        
+        if ([userName isEqualToString:self.userName]) {
+            NSUInteger index = [self.subscribedChannels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop){
+                CLVStarChatChannelInfo *channel = (CLVStarChatChannelInfo *)obj;
+                return [channel.name isEqualToString:channelName];
+            }];
+            
+            if (index != NSNotFound) {
+                [self.subscribedChannels removeObjectAtIndex:index];
+            }
+        }
+    }
+    else if ([packetType isEqualToString:@"user"]) {
+        CLVStarChatUserInfo *updatedUser = [CLVStarChatUserInfo userInfoWithDictionary:[packet objectForKey:@"user"]];
+        
+        [self.nickDictionary setObject:updatedUser.nick forKey:updatedUser.name];
+    }
+    else if ([packetType isEqualToString:@"channel"]) {
+        CLVStarChatChannelInfo *updatedChannel = [CLVStarChatChannelInfo channelInfoWithDictionary:[packet objectForKey:@"channel"]];
+        
+        NSUInteger index = [self.subscribedChannels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop){
+            CLVStarChatChannelInfo *channel = (CLVStarChatChannelInfo *)obj;
+            return [channel.name isEqualToString:updatedChannel.name];
+        }];
+        
+        if (index != NSNotFound) {
+            [self.subscribedChannels replaceObjectAtIndex:index withObject:updatedChannel];
+        }
     }
 }
 
