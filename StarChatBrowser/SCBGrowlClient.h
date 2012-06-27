@@ -16,5 +16,8 @@
                       description:(NSString *)description
                          isSticky:(BOOL)isSticky
                          userInfo:(NSDictionary *)userInfo;
+- (void)notifySystemEventWithTitle:(NSString *)title
+                       description:(NSString *)description
+                          isSticky:(BOOL)isSticky;
 
 @end

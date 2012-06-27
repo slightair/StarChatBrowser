@@ -94,6 +94,11 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)stop
 {
+    if (self.connectionStatus != kSCBUserStreamClientConnectionStatusConnecting &&
+        self.connectionStatus != kSCBUserStreamClientConnectionStatusConnected) {
+        return;
+    }
+
     [self stopKeepConnectionTimer];
     
     if (_readStreamRef) {

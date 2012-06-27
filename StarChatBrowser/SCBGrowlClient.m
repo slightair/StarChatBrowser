@@ -11,6 +11,7 @@
 #import "SCBConstants.h"
 
 #define kGrowlNewMessageNotificationName @"NewMessageNotification"
+#define kGrowlSystemEventNotificationName @"SystemEventNotification"
 
 #define kGrowlClickContextKeyNotificationName @"ClickContextKeyNotificationName"
 #define kGrowlClickContextKeyUserInfo @"ClickContextKeyUserInfo"
@@ -56,6 +57,19 @@
                                clickContext:clickContext];
 }
 
+- (void)notifySystemEventWithTitle:(NSString *)title
+                       description:(NSString *)description
+                          isSticky:(BOOL)isSticky
+{
+    [GrowlApplicationBridge notifyWithTitle:title
+                                description:description
+                           notificationName:kGrowlSystemEventNotificationName
+                                   iconData:nil
+                                   priority:0
+                                   isSticky:isSticky
+                               clickContext:nil];
+}
+
 #pragma mark -
 #pragma mark GrowlApplicationBridgeDelegate
 
@@ -63,6 +77,7 @@
 {
     NSArray *notifications = [NSArray arrayWithObjects:
                               kGrowlNewMessageNotificationName,
+                              kGrowlSystemEventNotificationName,
                               nil];
     
     return [NSDictionary dictionaryWithObjectsAndKeys:

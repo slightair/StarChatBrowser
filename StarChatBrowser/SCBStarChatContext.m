@@ -36,6 +36,8 @@
 
 - (void)setBaseURL:(NSURL *)baseURL
 {
+    _baseURL = baseURL;
+    
     self.subscribedChannels = [NSMutableArray array];
     self.nickDictionary = [NSMutableDictionary dictionary];
     self.keywords = [NSMutableArray array];
@@ -248,6 +250,9 @@
 
 - (void)userStreamClientDidConnected:(SCBUserStreamClient *)client
 {
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Connected: %@", [self.baseURL host]]
+                                                  description:@""
+                                                     isSticky:NO];
     [self reloadInfo];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kSCBNotificationUserStreamClientDidConnected
@@ -256,11 +261,19 @@
 
 - (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client
 {
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Disconnected: %@", [self.baseURL host]]
+                                                  description:@""
+                                                     isSticky:NO];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kSCBNotificationUserStreamClientDidDisconnected
                                                         object:self];}
 
 - (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error
 {
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Disconnected: %@", [self.baseURL host]]
+                                                  description:@""
+                                                     isSticky:NO];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kSCBNotificationUserStreamClientDidFail
                                                         object:self
                                                       userInfo:[NSDictionary dictionaryWithObject:error forKey:@"error"]];
