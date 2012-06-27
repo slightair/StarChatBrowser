@@ -37,7 +37,10 @@
     return self;
 }
 
-- (void)notifyNewMessageWithTitle:(NSString *)title description:(NSString *)description userInfo:(NSDictionary *)userInfo
+- (void)notifyNewMessageWithTitle:(NSString *)title
+                      description:(NSString *)description
+                         isSticky:(BOOL)isSticky
+                         userInfo:(NSDictionary *)userInfo
 {
     NSDictionary *clickContext = [NSDictionary dictionaryWithObjectsAndKeys:
                                   kGrowlNewMessageNotificationName, kGrowlClickContextKeyNotificationName,
@@ -49,7 +52,7 @@
                            notificationName:kGrowlNewMessageNotificationName
                                    iconData:nil
                                    priority:0
-                                   isSticky:NO
+                                   isSticky:isSticky
                                clickContext:clickContext];
 }
 

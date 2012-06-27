@@ -139,8 +139,18 @@
             nick = message.temporaryNick;
         }
         
+        BOOL isSticky = NO;
+        for (NSString *keyword in self.keywords) {
+            NSRange keywordRange = [message.body rangeOfString:keyword];
+            if (keywordRange.location != NSNotFound) {
+                isSticky = YES;
+                break;
+            }
+        }
+        
         [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
                                                      description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
+                                                        isSticky:isSticky
                                                         userInfo:packet];
     }
     else if ([packetType isEqualToString:@"subscribing"]) {
