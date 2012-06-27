@@ -12,6 +12,7 @@
 @interface SCBStarChatContext : NSObject <SCBUserStreamClientDelegate>
 
 - (void)setUserName:(NSString *)userName andPassword:(NSString *)password;
+- (void)updateKeywords;
 - (void)startUserStreamClient;
 - (void)stopUserStreamClient;
 

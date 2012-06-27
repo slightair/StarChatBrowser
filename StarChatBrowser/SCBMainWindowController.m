@@ -23,6 +23,7 @@
 @property (strong) NSString *mainPageURLString;
 @property (strong) NSString *authInfo;
 @property (strong) id authRequestResourceIdentifier;
+@property (strong) id updateUserRequestResourceIdentifier;
 @property (strong) SCBPreferencesWindowController *preferencesWindowController;
 @property (strong) SCBStarChatContext *starChatContext;
 
@@ -35,6 +36,7 @@
 @synthesize mainPageURLString = _mainPageURLString;
 @synthesize authInfo = _authInfo;
 @synthesize authRequestResourceIdentifier = _authRequestResourceIdentifier;
+@synthesize updateUserRequestResourceIdentifier = _updateUserRequestResourceIdentifier;
 @synthesize preferencesWindowController = _preferencesWindowController;
 @synthesize streamAPIStatusButton = _streamAPIStatusButton;
 @synthesize starChatContext = _starChatContext;
@@ -206,6 +208,10 @@
         self.authInfo = decodedString;
         self.authRequestResourceIdentifier = identifier;
     }
+    else if ([path isEqualToString:[NSString stringWithFormat:@"/users/%@", self.starChatContext.userName]] &&
+             [request.HTTPMethod isEqualToString:@"PUT"]) {
+        self.updateUserRequestResourceIdentifier = identifier;
+    }
     
     return request;
 }
@@ -222,6 +228,11 @@
         
         self.authInfo = nil;
         self.authRequestResourceIdentifier = nil;
+    }
+    else if ([identifier isEqual:self.updateUserRequestResourceIdentifier] && ((NSHTTPURLResponse *)response).statusCode == 200) {
+        [self.starChatContext updateKeywords];
+        
+        self.updateUserRequestResourceIdentifier = nil;
     }
 }
 

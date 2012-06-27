@@ -61,6 +61,17 @@
     }
 }
 
+- (void)updateKeywords
+{
+    [self.apiClient userInfoForName:self.userName
+                         completion:^(CLVStarChatUserInfo *user){
+                             self.keywords = [NSMutableArray arrayWithArray:user.keywords];
+                         }
+                            failure:^(NSError *error){
+                                NSLog(@"%@", [error localizedDescription]);
+                            }];
+}
+
 - (void)startUserStreamClient
 {
     [self.userStreamClient start];
