@@ -37,6 +37,5 @@ typedef enum {
 @property (assign)   id <SCBUserStreamClientDelegate> delegate;
 @property (strong, readonly) NSString *userName;
 @property (readonly) SCBUserStreamClientConnectionStatus connectionStatus;
-@property            NSInteger lastReceivedMessageId;
 
 @end

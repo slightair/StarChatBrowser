@@ -44,7 +44,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize delegate = _delegate;
 @synthesize connectionStatus = _connectionStatus;
 @synthesize keepConnectionTimer = _keepConnectionTimer;
-@synthesize lastReceivedMessageId = _lastReceivedMessageId;
 @synthesize lastPacketReceivedAt = _lastPacketReceivedAt;
 
 // AFHTTPClient
@@ -70,7 +69,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         self.streamParserAdapter = adapter;
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
-        self.lastReceivedMessageId = -1;
     }
     return self;
 }
@@ -126,12 +124,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         [self.delegate userStreamClientWillConnect:self];
     }
     
-    NSString *query = @"";
-    if (self.lastReceivedMessageId != -1) {
-        query = [NSString stringWithFormat:@"?start_message_id=%ld", self.lastReceivedMessageId + 1];
-    }
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream%@", self.userName, query] relativeToURL:self.baseURL];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"/users/%@/stream", self.userName] relativeToURL:self.baseURL];
     CFURLRef urlRef = CFURLCreateWithString(kCFAllocatorDefault, (__bridge CFStringRef)[url absoluteString], NULL);
     
     CFHTTPMessageRef messageRef = CFHTTPMessageCreateRequest(kCFAllocatorDefault, CFSTR("GET"), urlRef, kCFHTTPVersion1_1);
@@ -196,15 +189,6 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 
 - (void)parser:(SBJsonStreamParser *)parser foundObject:(NSDictionary *)dict
 {
-    if ([[dict objectForKey:@"type"] isEqualToString:@"message"]) {
-        NSDictionary *message = [dict objectForKey:@"message"];
-        NSInteger messageId = [[message objectForKey:@"id"] integerValue];
-        
-        if (messageId > self.lastReceivedMessageId) {
-            self.lastReceivedMessageId = messageId;
-        }
-    }
-    
     if ([self.delegate respondsToSelector:@selector(userStreamClient:didReceivedPacket:)]) {
         [self.delegate userStreamClient:self didReceivedPacket:dict];
     }
