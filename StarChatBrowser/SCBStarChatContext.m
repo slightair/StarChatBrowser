@@ -271,7 +271,7 @@
 
 - (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error
 {
-    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Connection Failed: %@", [client.baseURL host]]
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Disconnected: %@", [client.baseURL host]]
                                                   description:@""
                                                      isSticky:NO];
     
