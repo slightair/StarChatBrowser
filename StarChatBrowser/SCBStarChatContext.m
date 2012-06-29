@@ -250,7 +250,7 @@
 
 - (void)userStreamClientDidConnected:(SCBUserStreamClient *)client
 {
-    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Connected: %@", [self.baseURL host]]
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Connected: %@", [client.baseURL host]]
                                                   description:@""
                                                      isSticky:NO];
     [self reloadInfo];
@@ -261,7 +261,7 @@
 
 - (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client
 {
-    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Disconnected: %@", [self.baseURL host]]
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Disconnected: %@", [client.baseURL host]]
                                                   description:@""
                                                      isSticky:NO];
     
@@ -270,7 +270,7 @@
 
 - (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error
 {
-    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Disconnected: %@", [self.baseURL host]]
+    [[SCBGrowlClient sharedClient] notifySystemEventWithTitle:[NSString stringWithFormat:@"Connection Failed: %@", [client.baseURL host]]
                                                   description:@""
                                                      isSticky:NO];
     
