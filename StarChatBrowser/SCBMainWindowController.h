@@ -22,6 +22,7 @@
 - (IBAction)didPushedActionButton:(id)sender;
 - (IBAction)didPushedStreamAPIStatusButton:(id)sender;
 - (IBAction)didSelectPreferencesItem:(id)sender;
+- (IBAction)didSelectKeepWindowOnTopItem:(id)sender;
 - (IBAction)didSelectQuitItem:(id)sender;
 
 @property (assign) IBOutlet WebView *mainWebView;

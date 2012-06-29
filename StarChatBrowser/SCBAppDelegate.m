@@ -50,7 +50,12 @@
 
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
-    [self.windowController hideWindow];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL isKeepWindowOnTop = [[userDefaults valueForKey:kUserSettingsKeepWindowOnTop] boolValue];
+    
+    if (!isKeepWindowOnTop) {
+        [self.windowController hideWindow];
+    }
 }
 
 - (void)didClickedStatusItem:(id)sender

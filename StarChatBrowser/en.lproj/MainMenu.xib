@@ -324,6 +324,14 @@
 						<reference key="NSOnImage" ref="532016948"/>
 						<reference key="NSMixedImage" ref="189618750"/>
 					</object>
+					<object class="NSMenuItem" id="816499829">
+						<reference key="NSMenu" ref="882271696"/>
+						<string key="NSTitle">Keep Window On Top</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="532016948"/>
+						<reference key="NSMixedImage" ref="189618750"/>
+					</object>
 					<object class="NSMenuItem" id="116885563">
 						<reference key="NSMenu" ref="882271696"/>
 						<bool key="NSIsDisabled">YES</bool>
@@ -548,6 +556,14 @@
 					</object>
 					<int key="connectionID">825</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">didSelectKeepWindowOnTopItem:</string>
+						<reference key="source" ref="1000424966"/>
+						<reference key="destination" ref="816499829"/>
+					</object>
+					<int key="connectionID">831</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -622,6 +638,7 @@
 							<reference ref="555712973"/>
 							<reference ref="182619576"/>
 							<reference ref="116885563"/>
+							<reference ref="816499829"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -756,6 +773,11 @@
 						<reference key="object" ref="624244949"/>
 						<reference key="parent" ref="14738644"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">830</int>
+						<reference key="object" ref="816499829"/>
+						<reference key="parent" ref="882271696"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -794,12 +816,13 @@
 				<string key="818.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="822.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="823.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="830.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">829</int>
+			<int key="maxID">831</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -848,6 +871,7 @@
 						<string key="didPushedActionButton:">id</string>
 						<string key="didPushedRefreshButton:">id</string>
 						<string key="didPushedStreamAPIStatusButton:">id</string>
+						<string key="didSelectKeepWindowOnTopItem:">id</string>
 						<string key="didSelectPreferencesItem:">id</string>
 						<string key="didSelectQuitItem:">id</string>
 					</dictionary>
@@ -862,6 +886,10 @@
 						</object>
 						<object class="IBActionInfo" key="didPushedStreamAPIStatusButton:">
 							<string key="name">didPushedStreamAPIStatusButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="didSelectKeepWindowOnTopItem:">
+							<string key="name">didSelectKeepWindowOnTopItem:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="didSelectPreferencesItem:">

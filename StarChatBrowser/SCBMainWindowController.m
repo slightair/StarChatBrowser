@@ -67,6 +67,13 @@
                            selector:@selector(userStreamClientDidFail:)
                                name:kSCBNotificationUserStreamClientDidFail
                              object:nil];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL isKeepWindowOnTop = [[userDefaults valueForKey:kUserSettingsKeepWindowOnTop] boolValue];
+    NSMenuItem *keepWindowOnTopItem = [self.toolButtonActionMenu itemWithTitle:@"Keep Window On Top"];
+    [keepWindowOnTopItem setState:(isKeepWindowOnTop ? NSOnState : NSOffState)];
+    [self.window setHidesOnDeactivate:(isKeepWindowOnTop ? NO : YES)];
 }
 
 - (void)showWindow
@@ -155,6 +162,18 @@
 - (IBAction)didSelectPreferencesItem:(id)sender
 {
     [self showPreferences];
+}
+
+- (IBAction)didSelectKeepWindowOnTopItem:(id)sender
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    BOOL isOn = ![[userDefaults valueForKey:kUserSettingsKeepWindowOnTop] boolValue];
+    [(NSMenuItem *)sender setState:(isOn ? NSOnState : NSOffState)];
+    [userDefaults setBool:isOn forKey:kUserSettingsKeepWindowOnTop];
+    [userDefaults synchronize];
+    
+    [self.window setHidesOnDeactivate:(isOn ? NO : YES)];
 }
 
 - (IBAction)didSelectQuitItem:(id)sender

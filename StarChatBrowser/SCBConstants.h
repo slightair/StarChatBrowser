@@ -9,6 +9,7 @@
 // User Settings
 #define kUserSettingsStarChatServerURL @"StarChatServerURL"
 #define kUserSettingsEnableLoadingAtStartup @"EnableLoadingAtStartup"
+#define kUserSettingsKeepWindowOnTop @"KeepWindowOnTop"
 
 // Notification Center
 #define kSCBNotificationClickedGrowlNewMessageNotification @"ClickedGrowlNewMessageNotification"
