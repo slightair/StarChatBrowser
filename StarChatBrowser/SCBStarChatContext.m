@@ -47,6 +47,7 @@
     [self.userStreamClient stop];
     self.userStreamClient = [[SCBUserStreamClient alloc] initWithBaseURL:baseURL];
     self.userStreamClient.delegate = self;
+    self.userStreamClient.isAutoConnect = YES;
 }
 
 - (void)setUserName:(NSString *)userName andPassword:(NSString *)password

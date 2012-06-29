@@ -45,6 +45,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize connectionStatus = _connectionStatus;
 @synthesize keepConnectionTimer = _keepConnectionTimer;
 @synthesize lastPacketReceivedAt = _lastPacketReceivedAt;
+@synthesize isAutoConnect = _isAutoConnect;
 
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
@@ -69,6 +70,22 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         self.streamParserAdapter = adapter;
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
+        self.isAutoConnect = NO;
+        
+        __unsafe_unretained SCBUserStreamClient *client = self;
+        self.reachabilityStatusChangeBlock = ^(AFNetworkReachabilityStatus status){
+            if (!client.isAutoConnect) {
+                return;
+            }
+            
+            if (!client.userName) {
+                return;
+            }
+            
+            if (status != AFNetworkReachabilityStatusNotReachable) {
+                [client start];
+            }
+        };
     }
     return self;
 }
