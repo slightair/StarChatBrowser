@@ -107,11 +107,11 @@
 							<int key="NSToolbarItemVisibilityPriority">0</int>
 						</object>
 					</dictionary>
-					<array class="NSMutableArray" key="NSToolbarIBAllowedItems">
+					<array key="NSToolbarIBAllowedItems">
 						<reference ref="632194523"/>
 						<reference ref="687957812"/>
 					</array>
-					<array class="NSMutableArray" key="NSToolbarIBDefaultItems">
+					<array key="NSToolbarIBDefaultItems">
 						<reference ref="632194523"/>
 						<reference ref="687957812"/>
 					</array>
@@ -128,7 +128,6 @@
 							<string key="NSFrameSize">{480, 160}</string>
 							<reference key="NSSuperview" ref="478221583"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="557933061"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="568118166">
@@ -287,7 +286,7 @@
 											<object class="NSTextField" id="861058130">
 												<reference key="NSNextResponder" ref="933685605"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{145, 123}, {150, 17}}</string>
+												<string key="NSFrame">{{145, 131}, {150, 17}}</string>
 												<reference key="NSSuperview" ref="933685605"/>
 												<reference key="NSNextKeyView" ref="895701627"/>
 												<string key="NSReuseIdentifierKey">_NS:1505</string>
@@ -310,7 +309,7 @@
 											<object class="NSTextField" id="895701627">
 												<reference key="NSNextResponder" ref="933685605"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{157, 98}, {52, 17}}</string>
+												<string key="NSFrame">{{157, 106}, {52, 17}}</string>
 												<reference key="NSSuperview" ref="933685605"/>
 												<reference key="NSNextKeyView" ref="663255545"/>
 												<string key="NSReuseIdentifierKey">_NS:1505</string>
@@ -329,9 +328,8 @@
 											<object class="NSTextField" id="663255545">
 												<reference key="NSNextResponder" ref="933685605"/>
 												<int key="NSvFlags">268</int>
-												<string key="NSFrame">{{211, 98}, {252, 17}}</string>
+												<string key="NSFrame">{{211, 106}, {252, 17}}</string>
 												<reference key="NSSuperview" ref="933685605"/>
-												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:1505</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSTextFieldCell" key="NSCell" id="813036422">
@@ -356,7 +354,7 @@
 													<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 													<string>NeXT TIFF v4.0 pasteboard type</string>
 												</set>
-												<string key="NSFrame">{{20, 20}, {120, 120}}</string>
+												<string key="NSFrame">{{20, 20}, {120, 128}}</string>
 												<reference key="NSSuperview" ref="933685605"/>
 												<reference key="NSNextKeyView" ref="861058130"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -374,7 +372,7 @@
 												<bool key="NSEditable">YES</bool>
 											</object>
 										</array>
-										<string key="NSFrameSize">{480, 160}</string>
+										<string key="NSFrameSize">{480, 168}</string>
 										<reference key="NSNextKeyView" ref="248975321"/>
 										<string key="NSReuseIdentifierKey">_NS:28</string>
 									</object>
@@ -486,6 +484,38 @@
 						<reference key="destination" ref="663255545"/>
 					</object>
 					<int key="connectionID">371</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">initialFirstResponder</string>
+						<reference key="source" ref="568118166"/>
+						<reference key="destination" ref="954417393"/>
+					</object>
+					<int key="connectionID">375</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="954417393"/>
+						<reference key="destination" ref="183389525"/>
+					</object>
+					<int key="connectionID">372</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="857511646"/>
+						<reference key="destination" ref="954417393"/>
+					</object>
+					<int key="connectionID">374</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">nextKeyView</string>
+						<reference key="source" ref="183389525"/>
+						<reference key="destination" ref="857511646"/>
+					</object>
+					<int key="connectionID">373</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1365,7 +1395,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">371</int>
+			<int key="maxID">375</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
