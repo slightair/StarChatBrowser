@@ -67,6 +67,10 @@
                            selector:@selector(userStreamClientDidFail:)
                                name:kSCBNotificationUserStreamClientDidFail
                              object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(userStreamClientDidAutoConnect:)
+                               name:kSCBNotificationUserStreamClientDidAutoConnect
+                             object:nil];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -211,6 +215,11 @@
 - (void)userStreamClientDidFail:(NSNotification *)notification
 {
     self.streamAPIStatusButton.image = [NSImage imageNamed:NSImageNameStatusUnavailable];
+}
+
+- (void)userStreamClientDidAutoConnect:(NSNotification *)notification
+{
+    [self refreshMainWebView];
 }
 
 #pragma mark -

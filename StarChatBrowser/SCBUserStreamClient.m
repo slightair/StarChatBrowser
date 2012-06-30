@@ -27,6 +27,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @property          SCBUserStreamClientConnectionStatus connectionStatus;
 @property (strong) NSTimer *keepConnectionTimer;
 @property          time_t lastPacketReceivedAt;
+@property          AFNetworkReachabilityStatus reachabilityStatus;
 
 // AFHTTPClient
 @property (readwrite, nonatomic, retain) NSMutableDictionary *defaultHeaders;
@@ -46,6 +47,7 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
 @synthesize keepConnectionTimer = _keepConnectionTimer;
 @synthesize lastPacketReceivedAt = _lastPacketReceivedAt;
 @synthesize isAutoConnect = _isAutoConnect;
+@synthesize reachabilityStatus = _reachabilityStatus;
 
 // AFHTTPClient
 @synthesize defaultHeaders = _defaultHeaders;
@@ -71,9 +73,15 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
         self.streamParser = parser;
         self.connectionStatus = kSCBUserStreamClientConnectionStatusNone;
         self.isAutoConnect = NO;
+        self.reachabilityStatus = AFNetworkReachabilityStatusUnknown;
         
         __unsafe_unretained SCBUserStreamClient *client = self;
         self.reachabilityStatusChangeBlock = ^(AFNetworkReachabilityStatus status){
+            if (self.reachabilityStatus == status) {
+                return;
+            }
+            self.reachabilityStatus = status;
+            
             if (!client.isAutoConnect) {
                 return;
             }
@@ -84,6 +92,9 @@ void readHttpStreamCallBack(CFReadStreamRef stream, CFStreamEventType eventType,
             
             if (status != AFNetworkReachabilityStatusNotReachable) {
                 [client start];
+                if ([client.delegate respondsToSelector:@selector(userStreamClientDidAutoConnect:)]) {
+                    [client.delegate userStreamClientDidAutoConnect:client];
+                }
             }
         };
     }

@@ -27,6 +27,7 @@ typedef enum {
 - (void)userStreamClientDidConnected:(SCBUserStreamClient *)client;
 - (void)userStreamClientDidDisconnected:(SCBUserStreamClient *)client;
 - (void)userStreamClient:(SCBUserStreamClient *)client didFailWithError:(NSError *)error;
+- (void)userStreamClientDidAutoConnect:(SCBUserStreamClient *)client;
 @end
 
 @interface SCBUserStreamClient : AFHTTPClient <SBJsonStreamParserAdapterDelegate>

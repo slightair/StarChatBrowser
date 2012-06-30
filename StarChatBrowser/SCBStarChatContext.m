@@ -280,4 +280,10 @@
                                                       userInfo:[NSDictionary dictionaryWithObject:error forKey:@"error"]];
 }
 
+- (void)userStreamClientDidAutoConnect:(SCBUserStreamClient *)client
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSCBNotificationUserStreamClientDidAutoConnect
+                                                        object:self];
+}
+
 @end

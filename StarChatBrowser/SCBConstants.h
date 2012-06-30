@@ -17,3 +17,4 @@
 #define kSCBNotificationUserStreamClientDidConnected @"UserStreamClientDidConnected"
 #define kSCBNotificationUserStreamClientDidDisconnected @"UserStreamClientDidDisconnected"
 #define kSCBNotificationUserStreamClientDidFail @"UserStreamClientDidFail"
+#define kSCBNotificationUserStreamClientDidAutoConnect @"UserStreamClientDidAutoConnect"
