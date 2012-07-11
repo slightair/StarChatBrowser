@@ -14,6 +14,9 @@
 #import "SCBGrowlClient.h"
 #import "NSData+Base64.h"
 
+#define kWebViewAutoReloadIntervalThreshold 1800
+#define kNoInputEventThreshold 60
+
 @interface SCBMainWindowController ()
 
 - (void)refreshMainWebView;
@@ -26,6 +29,8 @@
 @property (strong) id updateUserRequestResourceIdentifier;
 @property (strong) SCBPreferencesWindowController *preferencesWindowController;
 @property (strong) SCBStarChatContext *starChatContext;
+@property (strong) NSTimer *webViewReloadCheckTimer;
+@property          time_t lastWebViewReloadAt;
 
 @end
 
@@ -40,6 +45,8 @@
 @synthesize preferencesWindowController = _preferencesWindowController;
 @synthesize streamAPIStatusButton = _streamAPIStatusButton;
 @synthesize starChatContext = _starChatContext;
+@synthesize webViewReloadCheckTimer = _webViewReloadCheckTimer;
+@synthesize lastWebViewReloadAt = _lastWebViewReloadAt;
 
 - (void)prepare
 {
@@ -78,6 +85,27 @@
     NSMenuItem *keepWindowOnTopItem = [self.toolButtonActionMenu itemWithTitle:@"Keep Window On Top"];
     [keepWindowOnTopItem setState:(isKeepWindowOnTop ? NSOnState : NSOffState)];
     [self.window setHidesOnDeactivate:(isKeepWindowOnTop ? NO : YES)];
+    
+    self.webViewReloadCheckTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                                    target:self
+                                                                  selector:@selector(reloadWebViewIfNeeded)
+                                                                  userInfo:nil
+                                                                   repeats:YES];
+}
+
+- (void)reloadWebViewIfNeeded
+{
+    time_t now = time(NULL);
+    if (now > self.lastWebViewReloadAt + kWebViewAutoReloadIntervalThreshold) {
+        if (self.window.isVisible) {
+            CFTimeInterval timeSinceLastEvent = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateCombinedSessionState, kCGAnyInputEventType);
+            if (timeSinceLastEvent < kNoInputEventThreshold) {
+                return;
+            }
+        }
+        
+        [self refreshMainWebView];
+    }
 }
 
 - (void)showWindow
@@ -122,6 +150,8 @@
     
     self.mainPageURLString = urlString;
     [self.mainWebView setMainFrameURL:urlString];
+    
+    self.lastWebViewReloadAt = time(NULL);
 }
 
 - (void)moveChannel:(NSString *)channel
@@ -136,6 +166,8 @@
 - (void)refreshMainWebView
 {
     [self.mainWebView reload:self];
+    
+    self.lastWebViewReloadAt = time(NULL);
 }
 
 - (void)showPreferences
