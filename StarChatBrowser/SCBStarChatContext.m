@@ -167,10 +167,32 @@
             }
         }
         
-        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
-                                                     description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
-                                                        isSticky:isSticky
-                                                        userInfo:packet];
+        if (!nick) {
+            [self.apiClient userInfoForName:message.userName
+                                 completion:^(CLVStarChatUserInfo *userInfo){
+                                     NSString *from = userInfo.nick;
+                                     if (from) {
+                                         [self.nickDictionary setObject:from forKey:userInfo.name];
+                                     }
+                                     else {
+                                         from = message.userName;
+                                     }
+                                     
+                                     [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
+                                                                                  description:[NSString stringWithFormat:@"%@: %@", from, message.body]
+                                                                                     isSticky:isSticky
+                                                                                     userInfo:packet];
+                                 }
+                                    failure:^(NSError *error){
+                                        NSLog(@"%@", [error localizedDescription]);
+                                    }];
+        }
+        else {
+            [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
+                                                         description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
+                                                            isSticky:isSticky
+                                                            userInfo:packet];
+        }
     }
     else if ([packetType isEqualToString:@"subscribing"]) {
         NSString *channelName = [packet objectForKey:@"channel_name"];
