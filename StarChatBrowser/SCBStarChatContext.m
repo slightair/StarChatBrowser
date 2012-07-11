@@ -209,21 +209,6 @@
             }
         }
     }
-    else if ([packetType isEqualToString:@"delete_subscribing"]) {
-        NSString *channelName = [packet objectForKey:@"channel_name"];
-        NSString *userName = [packet objectForKey:@"user_name"];
-        
-        if ([userName isEqualToString:self.userName]) {
-            NSUInteger index = [self.subscribedChannels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop){
-                CLVStarChatChannelInfo *channel = (CLVStarChatChannelInfo *)obj;
-                return [channel.name isEqualToString:channelName];
-            }];
-            
-            if (index != NSNotFound) {
-                [self.subscribedChannels removeObjectAtIndex:index];
-            }
-        }
-    }
     else if ([packetType isEqualToString:@"user"]) {
         CLVStarChatUserInfo *updatedUser = [CLVStarChatUserInfo userInfoWithDictionary:[packet objectForKey:@"user"]];
         
