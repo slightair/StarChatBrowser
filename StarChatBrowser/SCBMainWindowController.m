@@ -31,6 +31,7 @@
 @property (strong) SCBStarChatContext *starChatContext;
 @property (strong) NSTimer *webViewReloadCheckTimer;
 @property          time_t lastWebViewReloadAt;
+@property          BOOL isInjectedExtendJavaScript;
 
 @end
 
@@ -47,6 +48,7 @@
 @synthesize starChatContext = _starChatContext;
 @synthesize webViewReloadCheckTimer = _webViewReloadCheckTimer;
 @synthesize lastWebViewReloadAt = _lastWebViewReloadAt;
+@synthesize isInjectedExtendJavaScript = _isInjectedExtendJavaScript;
 
 - (void)prepare
 {
@@ -152,6 +154,7 @@
     [self.mainWebView setMainFrameURL:urlString];
     
     self.lastWebViewReloadAt = time(NULL);
+    self.isInjectedExtendJavaScript = NO;
 }
 
 - (void)moveChannel:(NSString *)channel
@@ -168,6 +171,7 @@
     [self.mainWebView reload:self];
     
     self.lastWebViewReloadAt = time(NULL);
+    self.isInjectedExtendJavaScript = NO;
 }
 
 - (void)showPreferences
@@ -272,6 +276,16 @@
              [request.HTTPMethod isEqualToString:@"PUT"]) {
         self.updateUserRequestResourceIdentifier = identifier;
     }
+    else if ([path isEqualToString:[NSString stringWithFormat:@"/users/%@/stream", self.starChatContext.userName]]) {
+        if (!self.isInjectedExtendJavaScript) {
+            [[sender windowScriptObject] setValue:self forKey:@"SCBMainWindowController"];
+            
+            NSString *hookLogOutEventScript = @"$('#logOutLink a').click(function(){window.SCBMainWindowController.didClickLogOut();return false;});";
+            [sender stringByEvaluatingJavaScriptFromString:hookLogOutEventScript];
+            
+            self.isInjectedExtendJavaScript = YES;
+        }
+    }
     
     return request;
 }
@@ -331,19 +345,6 @@
     [listener ignore];
     
     [[NSWorkspace sharedWorkspace] openURL:request.URL];
-}
-
-#pragma mark -
-#pragma mark WebFrameLoadDelegate Methods
-
-- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
-{
-    if ([frame isEqualTo:sender.mainFrame]) {
-        [[sender windowScriptObject] setValue:self forKey:@"SCBMainWindowController"];
-        
-        NSString *hookLogOutEventScript = @"$('#logOutLink a').click(function(){window.SCBMainWindowController.didClickLogOut();return false;});";
-        [sender stringByEvaluatingJavaScriptFromString:hookLogOutEventScript];
-    }
 }
 
 #pragma mark -
