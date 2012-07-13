@@ -167,10 +167,32 @@
             }
         }
         
-        [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
-                                                     description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
-                                                        isSticky:isSticky
-                                                        userInfo:packet];
+        if (!nick) {
+            [self.apiClient userInfoForName:message.userName
+                                 completion:^(CLVStarChatUserInfo *userInfo){
+                                     NSString *from = userInfo.nick;
+                                     if (from) {
+                                         [self.nickDictionary setObject:from forKey:userInfo.name];
+                                     }
+                                     else {
+                                         from = message.userName;
+                                     }
+                                     
+                                     [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
+                                                                                  description:[NSString stringWithFormat:@"%@: %@", from, message.body]
+                                                                                     isSticky:isSticky
+                                                                                     userInfo:packet];
+                                 }
+                                    failure:^(NSError *error){
+                                        NSLog(@"%@", [error localizedDescription]);
+                                    }];
+        }
+        else {
+            [[SCBGrowlClient sharedClient] notifyNewMessageWithTitle:message.channelName
+                                                         description:[NSString stringWithFormat:@"%@: %@", nick, message.body]
+                                                            isSticky:isSticky
+                                                            userInfo:packet];
+        }
     }
     else if ([packetType isEqualToString:@"subscribing"]) {
         NSString *channelName = [packet objectForKey:@"channel_name"];
@@ -206,21 +228,6 @@
                                         failure:^(NSError *error){
                                             NSLog(@"%@", [error localizedDescription]);
                                         }];
-            }
-        }
-    }
-    else if ([packetType isEqualToString:@"delete_subscribing"]) {
-        NSString *channelName = [packet objectForKey:@"channel_name"];
-        NSString *userName = [packet objectForKey:@"user_name"];
-        
-        if ([userName isEqualToString:self.userName]) {
-            NSUInteger index = [self.subscribedChannels indexOfObjectPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop){
-                CLVStarChatChannelInfo *channel = (CLVStarChatChannelInfo *)obj;
-                return [channel.name isEqualToString:channelName];
-            }];
-            
-            if (index != NSNotFound) {
-                [self.subscribedChannels removeObjectAtIndex:index];
             }
         }
     }
